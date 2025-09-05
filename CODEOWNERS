@@ -1,0 +1,6 @@
+# Code owners of VSHN Appcat Helm charts
+
+# As a Code owner, you are requested for Pull Request reviews
+
+# Used by Appcat as part of product offering
+/appcat/vshnmariadb     @vshn/schedar

@@ -15,6 +15,9 @@ helm repo add vshn https://charts.appcat.ch
 
 | Downloads & Changelog | Chart |
 | --- | --- |
+{{- range .charts }}
+| {{ if .version }}[![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/{{ .name }}-{{ .version }}/total)](https://github.com/vshn/appcat-charts/releases/tag/{{ .name }}-{{ .version }}){{ end }} | [{{ .name }}]({{ .dir }}{{ .name }}/README.md) |
+{{- end }}
 
 ## Add / Update Charts
 

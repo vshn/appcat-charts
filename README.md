@@ -8,14 +8,14 @@
 Add the repo:
 
 ```
-helm repo add vshn https://charts.appcat.ch
+helm repo add appcat https://charts.appcat.ch
 ```
 
 ## List of Charts
 
 | Downloads & Changelog | Chart |
 | --- | --- |
-| [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshnmariadb-0.0.1/total)](https://github.com/vshn/appcat-charts/releases/tag/vshnmariadb-0.0.1) | [vshnmariadb](charts/vshnmariadb/README.md) |
+| [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshnmariadb-0.0.2/total)](https://github.com/vshn/appcat-charts/releases/tag/vshnmariadb-0.0.2) | [vshnmariadb](charts/vshnmariadb/README.md) |
 
 ## Add / Update Charts
 

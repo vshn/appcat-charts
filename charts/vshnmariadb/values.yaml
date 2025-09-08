@@ -1,5 +1,6 @@
 replicas: 3
 myCfn: nil
+rootPassword: ""
 rootPasswordSecretKeyRef: {}
 image: nil
 

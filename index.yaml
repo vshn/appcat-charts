@@ -2,6 +2,18 @@ apiVersion: v1
 entries:
   vshnmariadb:
   - apiVersion: v1
+    appVersion: 0.0.2
+    created: "2025-09-08T13:09:06.88851365Z"
+    description: A Helm chart for MariaDB instances using the mariadb-operator
+    digest: 3bd7aaf91b92cdce22b0545cf224c5dbbb3947d3190b79d3469bb5c7506153e2
+    maintainers:
+    - email: info@vshn.ch
+      name: Schedar Team
+    name: vshnmariadb
+    urls:
+    - https://github.com/vshn/appcat-charts/releases/download/vshnmariadb-0.0.2/vshnmariadb-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v1
     appVersion: 2.7.3
     created: "2025-09-08T08:16:26.97475815Z"
     description: A Helm chart for MariaDB instances using the mariadb-operator
@@ -13,4 +25,4 @@ entries:
     urls:
     - https://github.com/vshn/appcat-charts/releases/download/vshnmariadb-0.0.1/vshnmariadb-0.0.1.tgz
     version: 0.0.1
-generated: "2025-09-08T08:16:26.97476355Z"
+generated: "2025-09-08T13:09:06.888521515Z"

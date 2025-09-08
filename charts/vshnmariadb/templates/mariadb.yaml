@@ -7,9 +7,14 @@ metadata:
     helm.sh/chart: {{ include "mariadb.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+
 spec:
-  {{- with .Values.rootPasswordSecretKeyRef }}
-  rootPasswordSecretKeyRef: {{ . | toYaml | nindent 4 }}
+  {{ if .Values.rootPasswordSecretKeyRef}}
+  rootPasswordSecretKeyRef: {{ .Values.rootPasswordSecretKeyRef | toYaml | nindent 4 }}
+  {{- else -}}
+  rootPasswordSecretKeyRef:
+    key: root-password
+    name: {{ include "mariadb.fullname" . }}
   {{- end }}
   image: {{ .Values.image }}
   replicas: {{ .Values.replicas }}

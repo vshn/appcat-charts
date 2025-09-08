@@ -1,0 +1,21 @@
+replicas: 3
+myCfn: nil
+rootPasswordSecretKeyRef: {}
+image: nil
+
+storage:
+  size: 1Gi
+resources: {}
+
+galera:
+  enabled: true
+  config:
+    reuseStorageVolume: true
+  providerOptions:
+    'gcs.fc_single_primary': 'yes'
+    'cert.log_conflicts': 'yes'
+
+metrics:
+  enabled: true
+  exporter:
+    image: nil

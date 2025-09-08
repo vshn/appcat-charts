@@ -1,0 +1,33 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: MariaDB
+metadata:
+  name: {{ include "mariadb.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "mariadb.name" . }}
+    helm.sh/chart: {{ include "mariadb.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  {{- with .Values.rootPasswordSecretKeyRef }}
+  rootPasswordSecretKeyRef: {{ . | toYaml | nindent 4 }}
+  {{- end }}
+  image: {{ .Values.image }}
+  replicas: {{ .Values.replicas }}
+  myCnf: {{ .Values.myCnf }}
+  {{- with .Values.resources }}
+  resources: {{ . | toYaml | nindent 4 }}
+  {{- end }}
+  metrics:
+    enabled: {{ .Values.metrics.enabled }}
+    exporter:
+      image: {{ .Values.metrics.exporter.image }}
+  galera:
+    enabled: {{ .Values.galera.enabled }}
+    config:
+      reuseStorageVolume: {{ .Values.galera.config.reuseStorageVolume }}
+    {{- with .Values.galera.providerOptions }}
+    providerOptions: {{ . | toYaml | nindent 6 }}
+    {{- end }}
+  storage:
+    size: {{ .Values.storage.size }}
+

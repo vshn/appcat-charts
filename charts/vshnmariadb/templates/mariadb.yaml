@@ -13,7 +13,7 @@ spec:
   {{- end }}
   image: {{ .Values.image }}
   replicas: {{ .Values.replicas }}
-  myCnf: {{ .Values.myCnf }}
+  myCnf: {{- .Values.myCnf | toYaml | nindent 4 }}
   {{- with .Values.resources }}
   resources: {{ . | toYaml | nindent 4 }}
   {{- end }}

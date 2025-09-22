@@ -1,0 +1,43 @@
+{{- if .Values.backup.enabled -}}
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: PhysicalBackup
+metadata:
+  name: {{ include "mariadb.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "mariadb.name" . }}
+    helm.sh/chart: {{ include "mariadb.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  mariaDbRef:
+    name: {{ include "mariadb.fullname" . }}
+  storage:
+    schedule:
+      {{/* Generate uniform random minute (0–59) */}}
+      {{- $minute := (randNumeric 2 | atoi) -}}
+      {{- if gt $minute 59 -}}{{- $minute = (mod $minute 60) -}}{{- end -}}
+
+      {{/* Generate uniform random hour (0–23) */}}
+      {{- $hour := (randNumeric 2 | atoi) -}}
+      {{- if gt $hour 95 }}{{- $hour = (mod $hour 24) }}{{- end -}}
+      {{- $hour = (mod $hour 24) -}}
+      cron: {{ printf "%d %d * * *" $minute $hour }}
+    s3:
+      bucket: {{ .Values.backup.s3.bucket }}
+      endpoint: {{ .Values.backup.s3.endpoint }}
+      accessKeyIdSecretKeyRef:
+        name: backup
+        key: access-key
+      secretAccessKeySecretKeyRef:
+        name: backup
+        key: secret-key
+      tls:
+        enabled: true
+  stagingStorage:
+    persistentVolumeClaim:
+      resources:
+        requests:
+          storage: {{ .Values.storage.size }}
+      accessModes:
+        - ReadWriteOnce 
+{{- end -}}

@@ -1,6 +1,6 @@
 # vshnmariadb
 
-![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![AppVersion: 0.0.3](https://img.shields.io/badge/AppVersion-0.0.3-informational?style=flat-square)
+![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![AppVersion: 0.0.4](https://img.shields.io/badge/AppVersion-0.0.4-informational?style=flat-square)
 
 A Helm chart for MariaDB instances using the mariadb-operator
 
@@ -49,6 +49,16 @@ Only MariaDB official images are supported. |
 | ---                                   | ---                                    | ---
 | `metrics.enabled`                     | Enabled is a flag to enable Metrics    | true
 | `exporter.image`                      | Image name to be used as metrics exporter. The supported format is <image>:<tag>. |
+
+### Backup
+
+| Parameter                             | Description                               | Default
+| ---                                   | ---                                       | ---
+| `backup.enabled`                      | Enabled is a flag to enable backups       | false
+| `backup.s3.bucket`                    | Name of the s3 bucket for the backups     |
+| `backup.s3.endpoint`                  | Name of the s3 endpoint for the backups   |
+| `backup.s3.accessKey`                 | Access key for the s3 bucket              |
+| `backup.s3.secretKey`                 | Secret key for the s3 bucket              |
 
 <!---
 Common/Useful Link references from values.yaml

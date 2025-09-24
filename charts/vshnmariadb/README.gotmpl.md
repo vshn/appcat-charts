@@ -22,6 +22,7 @@ Only MariaDB official images are supported. |
 | `storage.size`          | PVC size of the instance                                  | 1Gi
 | `resources`             | Resources describes the compute resource requirements.    |
 | `rootPasswordSecretKeyRef` | Reference to the secret containing the root password   |
+| `affinity`              | Definites the affinity for the pods                       |
 
 ### Galera
 
@@ -37,3 +38,13 @@ Only MariaDB official images are supported. |
 | ---                                   | ---                                    | ---
 | `metrics.enabled`                     | Enabled is a flag to enable Metrics    | true
 | `exporter.image`                      | Image name to be used as metrics exporter. The supported format is <image>:<tag>. |
+
+### Backup
+
+| Parameter                             | Description                               | Default
+| ---                                   | ---                                       | ---
+| `backup.enabled`                      | Enabled is a flag to enable backups       | false
+| `backup.s3.bucket`                    | Name of the s3 bucket for the backups     |
+| `backup.s3.endpoint`                  | Name of the s3 endpoint for the backups   |
+| `backup.s3.accessKey`                 | Access key for the s3 bucket              |
+| `backup.s3.secretKey`                 | Secret key for the s3 bucket              |

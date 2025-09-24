@@ -20,3 +20,6 @@ metrics:
   enabled: true
   exporter:
     image: nil
+
+backup:
+  enabled: false

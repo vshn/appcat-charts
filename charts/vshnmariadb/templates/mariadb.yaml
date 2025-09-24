@@ -7,7 +7,6 @@ metadata:
     helm.sh/chart: {{ include "mariadb.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
-
 spec:
   {{ if .Values.rootPasswordSecretKeyRef}}
   rootPasswordSecretKeyRef: {{ .Values.rootPasswordSecretKeyRef | toYaml | nindent 4 }}
@@ -35,4 +34,7 @@ spec:
     {{- end }}
   storage:
     size: {{ .Values.storage.size }}
+  {{- with .Values.affinity }}
+  affinity: {{ . | toYaml | nindent 4 }}
+  {{- end }}
 

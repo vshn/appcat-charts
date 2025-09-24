@@ -45,6 +45,7 @@ Only MariaDB official images are supported. |
 | ---                                   | ---                                       | ---
 | `backup.enabled`                      | Enabled is a flag to enable backups       | false
 | `backup.s3.bucket`                    | Name of the s3 bucket for the backups     |
+| `backup.s3.prefix`                    | Option prefix for the backup folder       |
 | `backup.s3.endpoint`                  | Name of the s3 endpoint for the backups   |
 | `backup.s3.accessKey`                 | Access key for the s3 bucket              |
 | `backup.s3.secretKey`                 | Secret key for the s3 bucket              |

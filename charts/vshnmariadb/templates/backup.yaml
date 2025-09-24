@@ -17,10 +17,13 @@ spec:
       {{- $minute := (randNumeric 2 | atoi) -}}
       {{- if gt $minute 59 -}}{{- $minute = (mod $minute 60) -}}{{- end -}}
 
-      {{/* Generate uniform random hour (0–23) */}}
-      {{- $hour := (randNumeric 2 | atoi) -}}
-      {{- if gt $hour 95 }}{{- $hour = (mod $hour 24) }}{{- end -}}
-      {{- $hour = (mod $hour 24) -}}
+      {{/* Random index 0–7 */}}
+      {{- $r := (mod (atoi (randNumeric 2)) 8) -}}
+
+      {{/* Allowed night hours */}}
+      {{- $nightHours := list 22 23 0 1 2 3 4 5 -}}
+
+      {{- $hour := index $nightHours $r -}}
       cron: {{ printf "%d %d * * *" $minute $hour }}
     s3:
       bucket: {{ .Values.backup.s3.bucket }}

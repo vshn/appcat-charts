@@ -22,6 +22,7 @@ Only MariaDB official images are supported. |
 | `storage.size`          | PVC size of the instance                                  | 1Gi
 | `resources`             | Resources describes the compute resource requirements.    |
 | `rootPasswordSecretKeyRef` | Reference to the secret containing the root password   |
+| `affinity`              | Definites the affinity for the pods                       |
 
 ### Galera
 

@@ -34,4 +34,7 @@ spec:
     {{- end }}
   storage:
     size: {{ .Values.storage.size }}
+  {{- with .Values.affinity }}
+  affinity: {{ . | toYaml | nindent 4 }}
+  {{- end }}
 

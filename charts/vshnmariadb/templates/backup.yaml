@@ -29,6 +29,9 @@ spec:
     s3:
       bucket: {{ .Values.backup.s3.bucket }}
       endpoint: {{ .Values.backup.s3.endpoint }}
+      {{- with .Values.backup.s3.prefix }}
+      prefix: {{ . | toYaml | nindent 8 }}
+      {{- end }}
       accessKeyIdSecretKeyRef:
         name: backup
         key: access-key

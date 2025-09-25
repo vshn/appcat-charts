@@ -47,5 +47,6 @@ Only MariaDB official images are supported. |
 | `backup.maxRention`                   | Max retention for the backups in hours    | 720h # 30 days
 | `backup.s3.bucket`                    | Name of the s3 bucket for the backups     |
 | `backup.s3.endpoint`                  | Name of the s3 endpoint for the backups   |
+| `backup.s3.prefix`                    | Optional subfolder to store the backups   |
 | `backup.s3.accessKey`                 | Access key for the s3 bucket              |
 | `backup.s3.secretKey`                 | Secret key for the s3 bucket              |

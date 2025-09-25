@@ -44,6 +44,7 @@ Only MariaDB official images are supported. |
 | Parameter                             | Description                               | Default
 | ---                                   | ---                                       | ---
 | `backup.enabled`                      | Enabled is a flag to enable backups       | false
+| `backup.maxRention`                   | Max retention for the backups in hours    | 720h # 30 days
 | `backup.s3.bucket`                    | Name of the s3 bucket for the backups     |
 | `backup.s3.endpoint`                  | Name of the s3 endpoint for the backups   |
 | `backup.s3.accessKey`                 | Access key for the s3 bucket              |

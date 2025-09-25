@@ -11,6 +11,7 @@ metadata:
 spec:
   mariaDbRef:
     name: {{ include "mariadb.fullname" . }}
+  maxRetention: {{ .Values.backup.maxRetention }}
   schedule:
     {{/* Generate uniform random minute (0–59) */}}
     {{- $minute := (randNumeric 2 | atoi) -}}

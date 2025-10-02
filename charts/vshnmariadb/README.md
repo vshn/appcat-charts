@@ -1,6 +1,6 @@
 # vshnmariadb
 
-![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![AppVersion: 0.0.7](https://img.shields.io/badge/AppVersion-0.0.7-informational?style=flat-square)
+![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![AppVersion: 0.0.8](https://img.shields.io/badge/AppVersion-0.0.8-informational?style=flat-square)
 
 A Helm chart for MariaDB instances using the mariadb-operator
 
@@ -62,6 +62,13 @@ Only MariaDB official images are supported. |
 | `backup.s3.prefix`                    | Optional subfolder to store the backups   |
 | `backup.s3.accessKey`                 | Access key for the s3 bucket              |
 | `backup.s3.secretKey`                 | Secret key for the s3 bucket              |
+
+### TLS
+
+| Parameter                             | Description                               | Default
+| ---                                   | ---                                       | ---
+| `tls.enabled`                         | Enabled is a flag to enable TLS           | true
+| `tls.required`                        | If tls connection should be enforced      | false
 
 <!---
 Common/Useful Link references from values.yaml

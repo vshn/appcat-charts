@@ -50,3 +50,10 @@ Only MariaDB official images are supported. |
 | `backup.s3.prefix`                    | Optional subfolder to store the backups   |
 | `backup.s3.accessKey`                 | Access key for the s3 bucket              |
 | `backup.s3.secretKey`                 | Secret key for the s3 bucket              |
+
+### TLS
+
+| Parameter                             | Description                               | Default
+| ---                                   | ---                                       | ---
+| `tls.enabled`                         | Enabled is a flag to enable TLS           | true
+| `tls.required`                        | If tls connection should be enforced      | false

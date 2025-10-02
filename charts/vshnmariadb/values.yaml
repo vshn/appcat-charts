@@ -24,3 +24,7 @@ metrics:
 backup:
   enabled: false
   maxRetention: 720h # 30 days
+
+tls:
+  enabled: true
+  required: false

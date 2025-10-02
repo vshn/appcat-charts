@@ -37,4 +37,7 @@ spec:
   {{- with .Values.affinity }}
   affinity: {{ . | toYaml | nindent 4 }}
   {{- end }}
+  tls:
+    enabled: {{ .Values.tls.enabled }}
+    required: {{ .Values.tls.required }}
 

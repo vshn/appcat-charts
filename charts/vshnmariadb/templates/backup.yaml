@@ -13,6 +13,11 @@ spec:
     name: {{ include "mariadb.fullname" . }}
   maxRetention: {{ .Values.backup.maxRetention }}
   schedule:
+    {{- $existingBackup := lookup "k8s.mariadb.com/v1alpha1" "PhysicalBackup" .Release.Namespace (include "mariadb.fullname" .) -}}
+    {{- if $existingBackup $existingBackup.spec.schedule.cron }}
+    {{/* Use existing schedule if the resource already exists */}}
+    cron: {{ $existingBackup.spec.schedule.cron }}
+    {{- else }}
     {{/* Generate uniform random minute (0–59) */}}
     {{- $minute := (randNumeric 2 | atoi) -}}
     {{- if gt $minute 59 -}}{{- $minute = (mod $minute 60) -}}{{- end -}}
@@ -25,6 +30,7 @@ spec:
 
     {{- $hour := index $nightHours $r -}}
     cron: {{ printf "%d %d * * *" $minute $hour }}
+    {{- end }}
   storage:
     s3:
       bucket: {{ .Values.backup.s3.bucket }}

@@ -64,3 +64,11 @@ prepare: ## Prepare the charts for testing
 	@find charts -type f -name Makefile | sed 's|/[^/]*$$||' | xargs -I '%' make -C '%' prepare
 	@echo 'Check for uncommitted changes ...'
 	git diff --exit-code
+
+.PHONY: push-local
+VERSION=0.0.0
+REGISTRY=registry.127.0.0.1.nip.io:8443
+push-local: ## Pushes the chart to a local OCI registry
+	helm package charts/vshnmariadb --version $(VERSION)
+	helm push vshnmariadb-$(VERSION).tgz oci://$(REGISTRY)/vshnmariadb --insecure-skip-tls-verify
+	rm vshnmariadb-$(VERSION).tgz

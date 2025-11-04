@@ -40,4 +40,7 @@ spec:
   tls:
     enabled: {{ .Values.tls.enabled }}
     required: {{ .Values.tls.required }}
-
+    serverCertSecretRef:
+      name: {{ .Values.tls.serverCertSecretRef }}
+    serverCASecretRef:
+      name: {{ .Values.tls.serverCASecretRef }}

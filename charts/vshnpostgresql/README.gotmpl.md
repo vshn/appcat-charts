@@ -1,15 +1,3 @@
-# vshnpostgresql
-
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
-
-Deploys and manages a CloudNativePG cluster and its associated resources.
-
-## Installation
-
-```bash
-helm repo add appcat https://charts.appcat.ch
-helm install vshnpostgresql vshn/vshnpostgresql
-```
 <!---
 The README.md file is automatically generated with helm-docs!
 
@@ -93,9 +81,3 @@ Common/Useful Link references from values.yaml
 -->
 [resource-units]: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes
 [cloudnative-pg]: https://cloudnative-pg.io/documentation/current/
-
-<!---
-Common/Useful Link references from values.yaml
--->
-[resource-units]: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes
-[prometheus-operator]: https://github.com/coreos/prometheus-operator

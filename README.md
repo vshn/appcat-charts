@@ -16,17 +16,7 @@ helm repo add appcat https://charts.appcat.ch
 | Downloads & Changelog | Chart |
 | --- | --- |
 | [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshnmariadb-0.0.10/total)](https://github.com/vshn/appcat-charts/releases/tag/vshnmariadb-0.0.10) | [vshnmariadb](charts/vshnmariadb/README.md) |
-
-## Licensing
-
-This repository contains charts under different licenses:
-
-- **Most charts**: Licensed under the [BSD-3-Clause License](LICENSE)
-- **vshnpostgresql chart**: Licensed under the [Apache License 2.0](charts/vshnpostgresql/LICENSE)
-  - This chart is based on the CloudNativePG "cluster" chart from https://github.com/cloudnative-pg/charts
-  - See [charts/vshnpostgresql/NOTICE](charts/vshnpostgresql/NOTICE) for attribution details
-
-Please refer to the LICENSE file in each chart's directory for specific licensing information.
+| [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshnpostgresql-0.0.1/total)](https://github.com/vshn/appcat-charts/releases/tag/vshnpostgresql-0.0.1) | [vshnpostgresql](charts/vshnpostgresql/README.md) |
 
 ## Add / Update Charts
 

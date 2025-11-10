@@ -144,3 +144,14 @@ Postgres GID
     {{- 26 -}}
   {{- end -}}
 {{- end -}}
+
+{{/*
+Backups ObjectStore Name
+*/}}
+{{- define "cluster.backups.objectStoreName" -}}
+  {{- if .Values.backups.plugin.objectStoreName -}}
+    {{- .Values.backups.plugin.objectStoreName -}}
+  {{- else -}}
+    {{- printf "%s-objectstore" (include "cluster.fullname" .) -}}
+  {{- end -}}
+{{- end -}}

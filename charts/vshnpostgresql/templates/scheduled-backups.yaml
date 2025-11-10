@@ -9,11 +9,25 @@ metadata:
   namespace: {{ include "cluster.namespace" $ }}
   labels: {{ include "cluster.labels" $context | nindent 4 }}
 spec:
+  {{- if .immediate }}
+  immediate: {{ .immediate }}
+  {{- else }}
   immediate: true
+  {{- end }}
   schedule: {{ .schedule | quote }}
-  method: {{ .method }}
+  {{- if eq $context.Values.backups.method "plugin" }}
+  method: plugin
+  cluster:
+    name: {{ include "cluster.fullname" $context }}
+  pluginConfiguration:
+    name: {{ $context.Values.backups.plugin.name }}
+    parameters:
+      barmanObjectName: {{ include "cluster.backups.objectStoreName" $context }}
+  {{- else }}
+  method: {{ $context.Values.backups.method }}
   backupOwnerReference: {{ .backupOwnerReference }}
   cluster:
     name: {{ include "cluster.fullname" $context }}
+  {{- end }}
 {{ end -}}
 {{ end }}

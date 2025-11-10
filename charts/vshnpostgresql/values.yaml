@@ -399,6 +399,11 @@ backups:
   # -- You need to configure backups manually, so backups are disabled by default.
   enabled: false
 
+  # -- Backup method to use. Available methods:
+  # * `barmanObjectStore` - Uses CNPG's built-in barman object store (legacy method)
+  # * `plugin` - Uses CNPG's plugin system with barman-cloud plugin (recommended)
+  method: barmanObjectStore
+
   # -- Overrides the provider specific default endpoint. Defaults to:
   # S3: https://s3.<region>.amazonaws.com"
   endpointURL: ""  # Leave empty if using the default S3 endpoint
@@ -460,19 +465,30 @@ backups:
     # -- Number of data files to be archived or restored in parallel.
     jobs: 2
 
+  # -- Retention policy for backups
+  retentionPolicy: "30d"
+
+  # -- Plugin-specific configuration (only used when method is 'plugin')
+  plugin:
+    # -- Plugin name
+    name: barman-cloud.cloudnative-pg.io
+    # -- Whether the plugin should be used as a WAL archiver
+    isWALArchiver: true
+    # -- Name of the ObjectStore resource to use (will be created if createObjectStore is true)
+    objectStoreName: ""
+    # -- Create an ObjectStore resource
+    createObjectStore: true
+
   scheduledBackups:
     -
       # -- Scheduled backup name
       name: daily-backup
       # -- Schedule in cron format
       schedule: "0 0 0 * * *"
-      # -- Backup owner reference
+      # -- Backup owner reference (only used with barmanObjectStore method)
       backupOwnerReference: self
-      # -- Backup method, can be `barmanObjectStore` (default) or `volumeSnapshot`
-      method: barmanObjectStore
-
-  # -- Retention policy for backups
-  retentionPolicy: "30d"
+      # -- Whether to take a backup immediately upon creation (only used with plugin method)
+      immediate: true
 
 imageCatalog:
   # -- Whether to provision an image catalog. If imageCatalog.images is empty this option will be ignored.

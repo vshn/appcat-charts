@@ -141,5 +141,12 @@ spec:
       {{- toYaml . | nindent 6 }}
     {{ end }}
     {{- end }}
+  {{- if and .Values.backups.enabled (eq .Values.backups.method "plugin") }}
+  plugins:
+    - name: {{ .Values.backups.plugin.name }}
+      isWALArchiver: {{ .Values.backups.plugin.isWALArchiver }}
+      parameters:
+        barmanObjectName: {{ include "cluster.backups.objectStoreName" . }}
+  {{- end }}
   {{ include "cluster.bootstrap" . | nindent 2 }}
   {{ include "cluster.backup" . | nindent 2 }}

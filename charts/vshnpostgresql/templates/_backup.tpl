@@ -1,5 +1,5 @@
 {{- define "cluster.backup" -}}
-{{- if .Values.backups.enabled }}
+{{- if and .Values.backups.enabled (ne .Values.backups.method "plugin") }}
 backup:
   target: "prefer-standby"
   retentionPolicy: {{ .Values.backups.retentionPolicy }}

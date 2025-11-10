@@ -1,0 +1,55 @@
+{{ if and .Values.backups.enabled (eq .Values.backups.method "plugin") .Values.backups.plugin.createObjectStore }}
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: {{ include "cluster.backups.objectStoreName" . }}
+  namespace: {{ include "cluster.namespace" . }}
+  labels: {{ include "cluster.labels" . | nindent 4 }}
+spec:
+  configuration:
+    {{- if .Values.backups.endpointURL }}
+    endpointURL: {{ .Values.backups.endpointURL | quote }}
+    {{- end }}
+    {{- if or (.Values.backups.endpointCA.create) (.Values.backups.endpointCA.name) }}
+    endpointCA:
+      name: {{ .Values.backups.endpointCA.name | default (printf "%s-barman-plugin-ca-bundle" (include "cluster.fullname" .)) }}
+      key: {{ .Values.backups.endpointCA.key | default "ca-bundle.crt" }}
+    {{- end }}
+    {{- if .Values.backups.destinationPath }}
+    destinationPath: {{ .Values.backups.destinationPath }}
+    {{- else }}
+    destinationPath: "s3://{{ required "You need to specify S3 bucket if destinationPath is not specified." .Values.backups.s3.bucket }}{{ .Values.backups.s3.path }}"
+    {{- end }}
+    {{- $secretName := .Values.backups.secret.name | default (printf "%s-barman-plugin-s3-creds" (include "cluster.fullname" .)) }}
+    s3Credentials:
+    {{- if .Values.backups.s3.inheritFromIAMRole }}
+      inheritFromIAMRole: true
+    {{- else }}
+      accessKeyId:
+        name: {{ $secretName }}
+        key: ACCESS_KEY_ID
+      secretAccessKey:
+        name: {{ $secretName }}
+        key: ACCESS_SECRET_KEY
+    {{- end }}
+    wal:
+      {{- if .Values.backups.wal.compression }}
+      compression: {{ .Values.backups.wal.compression }}
+      {{- end }}
+      {{- if .Values.backups.wal.encryption }}
+      encryption: {{ .Values.backups.wal.encryption }}
+      {{- end }}
+      {{- if .Values.backups.wal.maxParallel }}
+      maxParallel: {{ .Values.backups.wal.maxParallel }}
+      {{- end }}
+    data:
+      {{- if .Values.backups.data.compression }}
+      compression: {{ .Values.backups.data.compression }}
+      {{- end }}
+      {{- if .Values.backups.data.encryption }}
+      encryption: {{ .Values.backups.data.encryption }}
+      {{- end }}
+      {{- if .Values.backups.data.jobs }}
+      jobs: {{ .Values.backups.data.jobs }}
+      {{- end }}
+{{ end }}

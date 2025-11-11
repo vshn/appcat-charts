@@ -152,6 +152,6 @@ Backups ObjectStore Name
   {{- if .Values.backups.plugin.objectStoreName -}}
     {{- .Values.backups.plugin.objectStoreName -}}
   {{- else -}}
-    {{- printf "%s-objectstore" (include "cluster.fullname" .) -}}
+    {{- printf "%s-objectstore" .Release.Name -}}
   {{- end -}}
 {{- end -}}

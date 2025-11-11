@@ -12,7 +12,7 @@ spec:
     {{- end }}
     {{- if or (.Values.backups.endpointCA.create) (.Values.backups.endpointCA.name) }}
     endpointCA:
-      name: {{ .Values.backups.endpointCA.name | default (printf "%s-barman-plugin-ca-bundle" (include "cluster.fullname" .)) }}
+      name: {{ .Values.backups.endpointCA.name | default (printf "%s-barman-plugin-ca-bundle" .Release.Name) }}
       key: {{ .Values.backups.endpointCA.key | default "ca-bundle.crt" }}
     {{- end }}
     {{- if .Values.backups.destinationPath }}
@@ -20,7 +20,7 @@ spec:
     {{- else }}
     destinationPath: "s3://{{ required "You need to specify S3 bucket if destinationPath is not specified." .Values.backups.s3.bucket }}{{ .Values.backups.s3.path }}"
     {{- end }}
-    {{- $secretName := .Values.backups.secret.name | default (printf "%s-barman-plugin-s3-creds" (include "cluster.fullname" .)) }}
+    {{- $secretName := .Values.backups.secret.name | default (printf "%s-barman-plugin-s3-creds" .Release.Name) }}
     s3Credentials:
     {{- if .Values.backups.s3.inheritFromIAMRole }}
       inheritFromIAMRole: true

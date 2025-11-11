@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ default (printf "%s-barman-plugin-s3-creds" (include "cluster.fullname" .)) .Values.backups.secret.name }}
+  name: {{ default (printf "%s-barman-plugin-s3-creds" .Release.Name) .Values.backups.secret.name }}
   namespace: {{ include "cluster.namespace" . }}
 data:
   ACCESS_KEY_ID: {{ required ".Values.backups.s3.accessKey is required, but not specified." .Values.backups.s3.accessKey | b64enc | quote }}

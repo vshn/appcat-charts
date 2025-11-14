@@ -1,0 +1,35 @@
+{{ if and .Values.backups.enabled (eq .Values.backups.method "plugin") .Values.backups.plugin.createObjectStore }}
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: {{ printf "%s-objectstore" .Release.Name }}
+  namespace: {{ include "cluster.namespace" . }}
+  labels: {{ include "cluster.labels" . | nindent 4 }}
+spec:
+  configuration:
+    {{- if .Values.backups.endpointURL }}
+    endpointURL: {{ .Values.backups.endpointURL | quote }}
+    {{- end }}
+    destinationPath: "s3://{{ required "You need to specify S3 bucket." .Values.backups.s3.bucket }}"
+    s3Credentials:
+      accessKeyId:
+        name: {{ printf "%s-barman-plugin-s3-creds" .Release.Name }}
+        key: ACCESS_KEY_ID
+      secretAccessKey:
+        name: {{ printf "%s-barman-plugin-s3-creds" .Release.Name }}
+        key: ACCESS_SECRET_KEY
+    wal:
+      {{- if .Values.backups.wal.compression }}
+      compression: {{ .Values.backups.wal.compression }}
+      {{- end }}
+      {{- if .Values.backups.wal.encryption }}
+      encryption: {{ .Values.backups.wal.encryption }}
+      {{- end }}
+    data:
+      {{- if .Values.backups.data.compression }}
+      compression: {{ .Values.backups.data.compression }}
+      {{- end }}
+      {{- if .Values.backups.data.encryption }}
+      encryption: {{ .Values.backups.data.encryption }}
+      {{- end }}
+{{ end }}

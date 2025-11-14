@@ -407,75 +407,32 @@ backups:
   # -- Overrides the provider specific default endpoint. Defaults to:
   # S3: https://s3.<region>.amazonaws.com"
   endpointURL: ""  # Leave empty if using the default S3 endpoint
-  # -- Specifies a CA bundle to validate a privately signed certificate.
-  endpointCA:
-    # -- Creates a secret with the given value if true, otherwise uses an existing secret.
-    create: false
-    name: ""
-    key: ""
-    value: ""
 
-  # -- Overrides the provider specific default path. Defaults to:
-  # S3: s3://<bucket><path>
-  # Azure: https://<storageAccount>.<serviceName>.core.windows.net/<containerName><path>
-  # Google: gs://<bucket><path>
-  destinationPath: ""
-  # -- One of `s3`, `azure` or `google`
+  # -- One of `s3`, `azure` or `google` (only used for non-plugin backup method)
   provider: s3
+
   s3:
     region: ""
     bucket: ""
-    path: "/"
     accessKey: ""
     secretKey: ""
-    # -- Use the role based authentication without providing explicitly the keys
-    inheritFromIAMRole: false
-  azure:
-    path: "/"
-    connectionString: ""
-    storageAccount: ""
-    storageKey: ""
-    storageSasToken: ""
-    containerName: ""
-    serviceName: blob
-    inheritFromAzureAD: false
-  google:
-    path: "/"
-    bucket: ""
-    gkeEnvironment: false
-    applicationCredentials: ""
-  secret:
-    # -- Whether to create a secret for the backup credentials
-    create: true
-    # -- Name of the backup credentials secret
-    name: ""
 
   wal:
     # -- WAL compression method. One of `` (for no compression), `gzip`, `bzip2` or `snappy`.
     compression: gzip
     # -- Whether to instruct the storage provider to encrypt WAL files. One of `` (use the storage container default), `AES256` or `aws:kms`.
     encryption: AES256
-    # -- Number of WAL files to be archived or restored in parallel.
-    maxParallel: 1
   data:
     # -- Data compression method. One of `` (for no compression), `gzip`, `bzip2` or `snappy`.
     compression: gzip
     # -- Whether to instruct the storage provider to encrypt data files. One of `` (use the storage container default), `AES256` or `aws:kms`.
     encryption: AES256
-    # -- Number of data files to be archived or restored in parallel.
-    jobs: 2
 
   # -- Retention policy for backups
   retentionPolicy: "30d"
 
   # -- Plugin-specific configuration (only used when method is 'plugin')
   plugin:
-    # -- Plugin name
-    name: barman-cloud.cloudnative-pg.io
-    # -- Whether the plugin should be used as a WAL archiver
-    isWALArchiver: true
-    # -- Name of the ObjectStore resource to use (will be created if createObjectStore is true)
-    objectStoreName: ""
     # -- Create an ObjectStore resource
     createObjectStore: true
 

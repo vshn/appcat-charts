@@ -1,10 +1,10 @@
-{{- if and .Values.backups.enabled (eq .Values.backups.method "plugin") .Values.backups.plugin.createObjectStore (eq .Values.backups.provider "s3") (not .Values.backups.s3.inheritFromIAMRole) .Values.backups.secret.create }}
+{{- if and .Values.backups.enabled (eq .Values.backups.method "plugin") .Values.backups.plugin.createObjectStore }}
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ default (printf "%s-barman-plugin-s3-creds" .Release.Name) .Values.backups.secret.name }}
+  name: {{ printf "%s-barman-plugin-s3-creds" .Release.Name }}
   namespace: {{ include "cluster.namespace" . }}
 data:
-  ACCESS_KEY_ID: {{ required ".Values.backups.s3.accessKey is required, but not specified." .Values.backups.s3.accessKey | b64enc | quote }}
-  ACCESS_SECRET_KEY: {{ required ".Values.backups.s3.secretKey is required, but not specified." .Values.backups.s3.secretKey | b64enc | quote }}
+  ACCESS_KEY_ID: {{ required ".Values.backups.s3.accessKey is required." .Values.backups.s3.accessKey | b64enc | quote }}
+  ACCESS_SECRET_KEY: {{ required ".Values.backups.s3.secretKey is required." .Values.backups.s3.secretKey | b64enc | quote }}
 {{- end }}

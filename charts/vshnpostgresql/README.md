@@ -6,6 +6,13 @@
 > ### This chart is under active development.
 > ### Advised caution when using in production!
 
+## License
+
+This chart is licensed under the [Apache License 2.0](LICENSE).
+
+This chart is based on the CloudNativePG "cluster" chart from https://github.com/cloudnative-pg/charts.
+See [NOTICE](NOTICE) for attribution details.
+
 A note on the chart's purpose
 -----------------------------
 

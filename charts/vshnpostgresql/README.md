@@ -1,10 +1,20 @@
-# cluster
+# vshnpostgresql
 
-![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.5.0](https://img.shields.io/badge/AppVersion-0.5.0-informational?style=flat-square)
 
-> **Warning**
-> ### This chart is under active development.
-> ### Advised caution when using in production!
+A Helm chart for PostgreSQL clusters using the CloudNativePG operator
+
+## Installation
+
+```bash
+helm repo add appcat https://charts.appcat.ch
+helm install vshnpostgresql vshn/vshnpostgresql
+```
+<!---
+The README.md file is automatically generated with helm-docs!
+
+Edit the README.gotmpl.md template instead.
+-->
 
 ## License
 
@@ -13,61 +23,24 @@ This chart is licensed under the [Apache License 2.0](LICENSE).
 This chart is based on the CloudNativePG "cluster" chart from https://github.com/cloudnative-pg/charts.
 See [NOTICE](NOTICE) for attribution details.
 
-A note on the chart's purpose
------------------------------
+## Introduction
 
-This is an opinionated chart that is designed to provide a subset of simple, stable and safe configurations using the
-CloudNativePG operator. It is designed to provide a simple way to perform recovery operations to decrease your RTO.
+This helm chart is used to deploy PostgreSQL clusters using the [CloudNativePG operator](https://cloudnative-pg.io/).
 
-It is not designed to be a one size fits all solution. If you need a more complicated setup we strongly recommend that
-you either:
+It is an opinionated chart designed to provide a subset of simple, stable and safe configurations. It is designed to provide a simple way to perform recovery operations to decrease your RTO.
 
-* use the operator directly
-* create your own chart
-* use Kustomize to modify the chart's resources
+If you need a more complicated setup we recommend that you either use the operator directly, create your own chart, or use Kustomize to modify the chart's resources.
 
-**_Note_** that the latter option carries it's own risks as the chart configuration may change, especially before it
-reaches a stable release.
+## Configuration
 
-That being said, we welcome PRs that improve the chart, but please keep in mind that we don't plan to support every
-single configuration that the operator provides and we may reject PRs that add too much complexity and maintenance
-difficulty to the chart.
-
-Getting Started
----------------
-
-### Installing the Operator
-Skip this step if the CNPG operator is already installed in your cluster.
-
-```console
-helm repo add cnpg https://cloudnative-pg.github.io/charts
-helm upgrade --install cnpg \
---namespace cnpg-system \
---create-namespace \
-cnpg/cloudnative-pg
-```
-
-### Setting up a CNPG Cluster
-
-```console
-helm repo add cnpg https://cloudnative-pg.github.io/charts
-helm upgrade --install cnpg \
---namespace cnpg-database \
---create-namespace \
---values values.yaml \
-cnpg/cluster
-```
-
-A more detailed guide can be found in the [Getting Started docs](<./docs/Getting Started.md>).
-
-Cluster Configuration
----------------------
+The following table lists the configurable parameters of the chart. For default values and examples, consult `values.yaml`.
 
 ### Database types
 
-Currently the chart supports two database types. These are configured via the `type` parameter. These are:
+Currently the chart supports three database types. These are configured via the `type` parameter:
 * `postgresql` - A standard PostgreSQL database.
 * `postgis` - A PostgreSQL database with the PostGIS extension installed.
+* `timescaledb` - A PostgreSQL database with the TimescaleDB extension installed.
 
 Depending on the type the chart will use a different Docker image and fill in some initial setup, like extension installation.
 
@@ -75,15 +48,12 @@ Depending on the type the chart will use a different Docker image and fill in so
 
 The chart has three modes of operation. These are configured via the `mode` parameter:
 * `standalone` - Creates new or updates an existing CNPG cluster. This is the default mode.
-* `replica` - Creates a replica cluster from an existing CNPG cluster. **_Note_ that this mode is not yet supported.**
+* `replica` - Creates a replica cluster from an existing CNPG cluster.
 * `recovery` - Recovers a CNPG cluster from a backup, object store or via pg_basebackup.
 
 ### Backup configuration
 
-CNPG implements disaster recovery via [Barman](https://pgbarman.org/). The following section configures the barman object
-store where backups will be stored. Barman performs backups of the cluster filesystem base backup and WALs. Both are
-stored in the specified location. The backup provider is configured via the `backups.provider` parameter. The following
-providers are supported:
+CNPG implements disaster recovery via [Barman](https://pgbarman.org/). The backup provider is configured via the `backups.provider` parameter. The following providers are supported:
 
 * S3 or S3-compatible stores, like MinIO
 * Microsoft Azure Blob Storage
@@ -91,29 +61,16 @@ providers are supported:
 
 Additionally you can specify the following parameters:
 * `backups.retentionPolicy` - The retention policy for backups. Defaults to `30d`.
-* `backups.scheduledBackups` - An array of scheduled backups containing a name and a crontab schedule. Example:
-```yaml
-backups:
-  scheduledBackups:
-    - name: daily-backup
-      schedule: "0 0 0 * * *" # Daily at midnight
-      backupOwnerReference: self
-```
+* `backups.scheduledBackups` - An array of scheduled backups containing a name and a crontab schedule.
 
-Each backup adapter takes it's own set of parameters, listed in the [Configuration options](#Configuration-options) section
-below. Refer to the table for the full list of parameters and place the configuration under the appropriate key: `backup.s3`,
-`backup.azure`, or `backup.google`.
-
-Recovery
---------
+### Recovery
 
 There is a separate document outlining the recovery procedure here: **[Recovery](docs/Recovery.md)**
 
-Examples
---------
+### Examples
 
 There are several configuration examples in the [examples](examples) directory. Refer to them for a basic setup and
-refer to  the [CloudNativePG Documentation](https://cloudnative-pg.io/documentation/current/) for more advanced configurations.
+refer to the [CloudNativePG Documentation](https://cloudnative-pg.io/documentation/current/) for more advanced configurations.
 
 ## Values
 
@@ -343,22 +300,8 @@ refer to  the [CloudNativePG Documentation](https://cloudnative-pg.io/documentat
 | poolers[].monitoring.enabled                        | bool                                         | `false`                                          | Whether to enable monitoring for the Pooler.                                                                                                                                                                                                                                                                                                                                                                                               |
 | poolers[].monitoring.podMonitor.enabled             | bool                                         | `true`                                           | Create a podMonitor for the Pooler.                                                                                                                                                                                                                                                                                                                                                                                                        |
 
-## Maintainers
-
-| Name | Email | Url |
-| ---- | ------ | --- |
-| itay-grudev | <itay+cloudnativepg-charts+github.com@grudev.com> |  |
-
-Features that require feedback
-------------------------------
-
-Please raise a ticket tested any of the following features and they have worked.
-Alternatively a ticket and a PR if you have found that something needs a change to work properly.
-
-- [ ] Google Cloud Storage Backups
-- [ ] Google Cloud Storage Recovery
-
-TODO
-----
-* IAM Role for S3 Service Account
-* Automatic provisioning of a Alert Manager configuration
+<!---
+Common/Useful Link references from values.yaml
+-->
+[resource-units]: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes
+[prometheus-operator]: https://github.com/coreos/prometheus-operator

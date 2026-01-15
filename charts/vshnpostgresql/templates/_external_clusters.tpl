@@ -1,21 +1,30 @@
+
 {{- define "cluster.externalClusters" -}}
-externalClusters:
 {{- if eq .Values.mode "standalone" }}
 {{- else if eq .Values.mode "recovery" }}
+externalClusters:
   {{- if eq .Values.recovery.method "pg_basebackup" }}
   - name: pgBaseBackupSource
      {{- include "cluster.externalSourceCluster" .Values.recovery.pgBaseBackup.source | nindent 4 }}
   {{- else if eq .Values.recovery.method "import" }}
   - name: importSource
      {{- include "cluster.externalSourceCluster" .Values.recovery.import.source | nindent 4 }}
-  {{- else if eq .Values.recovery.method "object_store" }}
+  {{- else if and (eq .Values.recovery.method "object_store") (eq (include "cluster.useBarmanCloudPlugin" .) "false") }}
   - name: objectStoreRecoveryCluster
     barmanObjectStore:
       serverName: {{ .Values.recovery.clusterName }}
       {{- $d := dict "chartFullname" (include "cluster.fullname" .) "scope" .Values.recovery "secretPrefix" "recovery" -}}
       {{- include "cluster.barmanObjectStoreConfig" $d | nindent 4 }}
+  {{- else if and (eq .Values.recovery.method "object_store") (eq (include "cluster.useBarmanCloudPlugin" .) "true") }}
+  - name: origin
+    plugin:
+      name: barman-cloud.cloudnative-pg.io
+      parameters:
+        barmanObjectName: {{ include "cluster.fullname" $  }}-object-store
+        serverName: {{ .Values.recovery.clusterName |  default (include "cluster.fullname" .) }}
   {{- end }}
 {{- else if eq .Values.mode "replica" }}
+externalClusters:
   - name: originCluster
   {{- if not (empty .Values.replica.origin.objectStore.provider) }}
     barmanObjectStore:

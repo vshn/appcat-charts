@@ -20,8 +20,8 @@ apiVersion: v2
 name: vshnpostgresql
 description: A Helm chart for PostgreSQL clusters using the CloudNativePG operator
 type: application
-version: 0.5.0
-appVersion: 0.5.0
+version: 0.6.0
+appVersion: 0.6.0
 maintainers:
   - name: Schedar Team
     email: info@vshn.ch

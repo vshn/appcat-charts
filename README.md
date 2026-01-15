@@ -16,6 +16,7 @@ helm repo add appcat https://charts.appcat.ch
 | Downloads & Changelog | Chart |
 | --- | --- |
 | [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshnmariadb-0.0.11/total)](https://github.com/vshn/appcat-charts/releases/tag/vshnmariadb-0.0.11) | [vshnmariadb](charts/vshnmariadb/README.md) |
+| [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshnpostgresql-0.5.0/total)](https://github.com/vshn/appcat-charts/releases/tag/vshnpostgresql-0.5.0) | [vshnpostgresql](charts/vshnpostgresql/README.md) |
 
 ## Add / Update Charts
 

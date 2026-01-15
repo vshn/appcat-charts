@@ -133,4 +133,18 @@ entries:
     urls:
     - https://github.com/vshn/appcat-charts/releases/download/vshnmariadb-0.0.1/vshnmariadb-0.0.1.tgz
     version: 0.0.1
-generated: "2025-11-18T11:43:57.207150629Z"
+  vshnpostgresql:
+  - apiVersion: v2
+    appVersion: 0.5.0
+    created: "2026-01-15T15:09:14.831466128Z"
+    description: A Helm chart for PostgreSQL clusters using the CloudNativePG operator
+    digest: 7bcca1952d8616792521ceaa8cace06d6537c4dbafbe36b58d5fafa978370194
+    maintainers:
+    - email: info@vshn.ch
+      name: Schedar Team
+    name: vshnpostgresql
+    type: application
+    urls:
+    - https://github.com/vshn/appcat-charts/releases/download/vshnpostgresql-0.5.0/vshnpostgresql-0.5.0.tgz
+    version: 0.5.0
+generated: "2026-01-15T15:09:14.831495362Z"

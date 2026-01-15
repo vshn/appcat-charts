@@ -13,8 +13,11 @@ galera:
   config:
     reuseStorageVolume: true
   providerOptions:
-    'gcs.fc_single_primary': 'yes'
-    'cert.log_conflicts': 'yes'
+    "gcs.fc_single_primary": "yes"
+    "cert.log_conflicts": "yes"
+
+startupProbe:
+  failureThreshold: 30
 
 metrics:
   enabled: true

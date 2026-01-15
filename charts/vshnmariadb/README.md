@@ -1,6 +1,6 @@
 # vshnmariadb
 
-![Version: 0.0.11](https://img.shields.io/badge/Version-0.0.11-informational?style=flat-square) ![AppVersion: 0.0.11](https://img.shields.io/badge/AppVersion-0.0.11-informational?style=flat-square)
+![Version: 0.0.12](https://img.shields.io/badge/Version-0.0.12-informational?style=flat-square) ![AppVersion: 0.0.12](https://img.shields.io/badge/AppVersion-0.0.12-informational?style=flat-square)
 
 A Helm chart for MariaDB instances using the mariadb-operator
 
@@ -35,6 +35,9 @@ Only MariaDB official images are supported. |
 | `resources`             | Resources describes the compute resource requirements.    |
 | `rootPasswordSecretKeyRef` | Reference to the secret containing the root password   |
 | `affinity`              | Definites the affinity for the pods                       |
+| `startupProbe`          | Startup probe configuration for MariaDB containers        | `{failureThreshold: 30}`
+| `livenessProbe`         | Liveness probe configuration for MariaDB containers       |
+| `readinessProbe`        | Readiness probe configuration for MariaDB containers      |
 
 ### Galera
 

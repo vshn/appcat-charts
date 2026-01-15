@@ -65,10 +65,25 @@ prepare: ## Prepare the charts for testing
 	@echo 'Check for uncommitted changes ...'
 	git diff --exit-code
 
-.PHONY: push-local
 VERSION=0.0.0
 REGISTRY=registry.127.0.0.1.nip.io:8443
-push-local: ## Pushes the chart to a local OCI registry
-	helm package charts/vshnmariadb --version $(VERSION)
-	helm push vshnmariadb-$(VERSION).tgz oci://$(REGISTRY)/vshnmariadb --insecure-skip-tls-verify
-	rm vshnmariadb-$(VERSION).tgz
+CHART ?=
+CHARTS := $(notdir $(wildcard $(CHARTS_DIR)/*))
+
+.PHONY: push-local
+push-local: ## Pushes a chart to a local OCI registry (CHART=name)
+ifndef CHART
+	$(error CHART is required. Usage: make push-local CHART=vshnpostgresql)
+endif
+	helm package $(CHARTS_DIR)/$(CHART) --version $(VERSION)
+	helm push $(CHART)-$(VERSION).tgz oci://$(REGISTRY)/$(CHART) --insecure-skip-tls-verify
+	rm $(CHART)-$(VERSION).tgz
+
+.PHONY: push-local-all
+push-local-all: ## Pushes all charts to a local OCI registry
+	@for chart in $(CHARTS); do \
+		echo "Pushing $$chart..."; \
+		helm package $(CHARTS_DIR)/$$chart --version $(VERSION); \
+		helm push $$chart-$(VERSION).tgz oci://$(REGISTRY)/$$chart --insecure-skip-tls-verify; \
+		rm $$chart-$(VERSION).tgz; \
+	done

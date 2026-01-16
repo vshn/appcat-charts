@@ -23,6 +23,9 @@ Only MariaDB official images are supported. |
 | `resources`             | Resources describes the compute resource requirements.    |
 | `rootPasswordSecretKeyRef` | Reference to the secret containing the root password   |
 | `affinity`              | Definites the affinity for the pods                       |
+| `startupProbe`          | Startup probe configuration for MariaDB containers        | `{failureThreshold: 30}`
+| `livenessProbe`         | Liveness probe configuration for MariaDB containers       |
+| `readinessProbe`        | Readiness probe configuration for MariaDB containers      |
 
 ### Galera
 

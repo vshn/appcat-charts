@@ -21,6 +21,15 @@ spec:
   {{- with .Values.resources }}
   resources: {{ . | toYaml | nindent 4 }}
   {{- end }}
+  {{- with .Values.startupProbe }}
+  startupProbe: {{ . | toYaml | nindent 4 }}
+  {{- end }}
+  {{- with .Values.livenessProbe }}
+  livenessProbe: {{ . | toYaml | nindent 4 }}
+  {{- end }}
+  {{- with .Values.readinessProbe }}
+  readinessProbe: {{ . | toYaml | nindent 4 }}
+  {{- end }}
   metrics:
     enabled: {{ .Values.metrics.enabled }}
     exporter:

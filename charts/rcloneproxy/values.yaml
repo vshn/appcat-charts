@@ -1,0 +1,45 @@
+image:
+  # -- Image repository for rclone
+  repository: rclone/rclone
+  # -- Configure the image tag. To update to a newer version, use the commit sha from the tagged release
+  tag: "sha-73bcae2"
+  # -- Image pull policy
+  pullPolicy: IfNotPresent
+
+# -- Number of replicas
+replicaCount: 1
+
+# -- Service configuration
+service:
+  # -- Service type
+  type: ClusterIP
+  # -- Service port (rclone S3 server port)
+  port: 9095
+
+# -- Backend S3 storage configuration
+backend:
+  # -- Reference to an existing secret containing backend S3 credentials
+  secretRef:
+    # -- Name of the secret containing backend credentials
+    name: ""
+    # -- Keys in the secret for each configuration value
+    keys:
+      # -- Key for S3 access key ID
+      accessKeyID: "access-key-id"
+      # -- Key for S3 access key secret
+      accessKeySecret: "access-key-secret"
+      # -- Key for S3 endpoint URL
+      endpoint: "endpoint"
+      # -- Key for S3 region
+      region: "region"
+      # -- Key for S3 bucket name
+      bucket: "bucket"
+
+# -- Resource requests and limits
+resources:
+  requests:
+    memory: "96Mi"
+    cpu: "10m"
+  limits:
+    memory: "128Mi"
+    cpu: "25m"

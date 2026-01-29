@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "rcloneproxy.fullname" . }}
+  name: rcloneproxy
   labels:
-    {{- include "rcloneproxy.labels" . | nindent 4 }}
+    app: rcloneproxy
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "rcloneproxy.selectorLabels" . | nindent 6 }}
+      app: rcloneproxy
   template:
     metadata:
       labels:
-        {{- include "rcloneproxy.labels" . | nindent 8 }}
+        app: rcloneproxy
     spec:
       initContainers:
         - name: generate-config
@@ -80,18 +80,18 @@ spec:
             - name: ENCRYPTION_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "rcloneproxy.fullname" . }}-encryption-plain
+                  name: rcloneproxy-encryption-key
                   key: password
             - name: ENCRYPTION_PASSWORD2
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "rcloneproxy.fullname" . }}-encryption-plain
+                  name: rcloneproxy-encryption-key
                   key: password2
           volumeMounts:
             - name: rclone-config
               mountPath: /config/rclone
       containers:
-        - name: {{ .Chart.Name }}
+        - name: rcloneproxy
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
@@ -99,7 +99,7 @@ spec:
             - -c
           args:
             - |
-              rclone -vv serve s3 s3-crypt: --addr :{{ .Values.service.port }} --auth-key "${BACKEND_ACCESS_KEY_ID},${BACKEND_SECRET_ACCESS_KEY}"
+              rclone serve s3 s3-crypt: --addr :{{ .Values.service.port }} --auth-key "${BACKEND_ACCESS_KEY_ID},${BACKEND_SECRET_ACCESS_KEY}"
           env:
             - name: RCLONE_CONFIG
               value: /config/rclone/rclone.conf

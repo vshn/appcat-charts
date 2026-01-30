@@ -38,8 +38,8 @@ backend:
 # -- Resource requests and limits
 resources:
   requests:
-    memory: "96Mi"
+    memory: "256Mi"
     cpu: "10m"
   limits:
-    memory: "128Mi"
+    memory: "512Mi"
     cpu: "25m"

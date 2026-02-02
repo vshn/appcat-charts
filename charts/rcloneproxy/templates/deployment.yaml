@@ -14,10 +14,42 @@ spec:
       labels:
         app: rcloneproxy
     spec:
+      {{- if .Values.podSecurityContext.enabled }}
+      securityContext:
+        {{- if .Values.podSecurityContext.fsGroup }}
+        fsGroup: {{ .Values.podSecurityContext.fsGroup }}
+        {{- end }}
+        {{- if .Values.podSecurityContext.fsGroupChangePolicy }}
+        fsGroupChangePolicy: {{ .Values.podSecurityContext.fsGroupChangePolicy }}
+        {{- end }}
+        {{- if .Values.podSecurityContext.seLinuxOptions }}
+        seLinuxOptions:
+          {{- toYaml .Values.podSecurityContext.seLinuxOptions | nindent 10 }}
+        {{- end }}
+      {{- end }}
       initContainers:
         - name: generate-config
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.containerSecurityContext.enabled }}
+          securityContext:
+            {{- if .Values.containerSecurityContext.runAsUser }}
+            runAsUser: {{ .Values.containerSecurityContext.runAsUser }}
+            {{- end }}
+            {{- if .Values.containerSecurityContext.runAsNonRoot }}
+            runAsNonRoot: {{ .Values.containerSecurityContext.runAsNonRoot }}
+            {{- end }}
+            {{- if ne .Values.containerSecurityContext.allowPrivilegeEscalation nil }}
+            allowPrivilegeEscalation: {{ .Values.containerSecurityContext.allowPrivilegeEscalation }}
+            {{- end }}
+            {{- if ne .Values.containerSecurityContext.readOnlyRootFilesystem nil }}
+            readOnlyRootFilesystem: {{ .Values.containerSecurityContext.readOnlyRootFilesystem }}
+            {{- end }}
+            {{- if .Values.containerSecurityContext.capabilities }}
+            capabilities:
+              {{- toYaml .Values.containerSecurityContext.capabilities | nindent 14 }}
+            {{- end }}
+          {{- end }}
           command:
             - /bin/sh
             - -c
@@ -94,6 +126,25 @@ spec:
         - name: rcloneproxy
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.containerSecurityContext.enabled }}
+          securityContext:
+            {{- if .Values.containerSecurityContext.runAsUser }}
+            runAsUser: {{ .Values.containerSecurityContext.runAsUser }}
+            {{- end }}
+            {{- if .Values.containerSecurityContext.runAsNonRoot }}
+            runAsNonRoot: {{ .Values.containerSecurityContext.runAsNonRoot }}
+            {{- end }}
+            {{- if ne .Values.containerSecurityContext.allowPrivilegeEscalation nil }}
+            allowPrivilegeEscalation: {{ .Values.containerSecurityContext.allowPrivilegeEscalation }}
+            {{- end }}
+            {{- if ne .Values.containerSecurityContext.readOnlyRootFilesystem nil }}
+            readOnlyRootFilesystem: {{ .Values.containerSecurityContext.readOnlyRootFilesystem }}
+            {{- end }}
+            {{- if .Values.containerSecurityContext.capabilities }}
+            capabilities:
+              {{- toYaml .Values.containerSecurityContext.capabilities | nindent 14 }}
+            {{- end }}
+          {{- end }}
           command:
             - /bin/sh
             - -c

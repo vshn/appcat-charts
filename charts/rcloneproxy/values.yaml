@@ -43,3 +43,32 @@ resources:
   limits:
     memory: "512Mi"
     cpu: "25m"
+
+# -- Pod security context configuration
+podSecurityContext:
+  # -- Enable pod security context
+  enabled: true
+  # -- FSGroup for volume ownership
+  fsGroup: 65532
+  # -- FSGroupChangePolicy for volume ownership changes
+  fsGroupChangePolicy: "OnRootMismatch"
+  # -- SELinux options for OpenShift compatibility
+  seLinuxOptions: {}
+    # type: "spc_t"
+
+# -- Container security context configuration
+containerSecurityContext:
+  # -- Enable container security context
+  enabled: true
+  # -- Run as non-root user
+  runAsNonRoot: true
+  # -- User ID to run the container
+  runAsUser: 65532
+  # -- Disallow privilege escalation
+  allowPrivilegeEscalation: false
+  # -- Read-only root filesystem
+  readOnlyRootFilesystem: false
+  # -- Linux capabilities to drop
+  capabilities:
+    drop:
+      - ALL

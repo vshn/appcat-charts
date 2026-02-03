@@ -49,8 +49,8 @@ A Helm chart for deploying rclone as an intermediate s3 proxy
 | containerSecurityContext.runAsNonRoot | bool | `true` | Run as non-root user |
 | containerSecurityContext.runAsUser | int | `65532` | User ID to run the container |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
-| image.repository | string | `"rclone/rclone"` | Image repository for rclone |
-| image.tag | string | `"sha-73bcae2"` | Configure the image tag. To update to a newer version, use the commit sha from the tagged release |
+| image.repository | string | `"ghcr.io/rclone/rclone"` | Image repository for rclone |
+| image.tag | string | `"1.73.0"` | Configure the image tag |
 | podSecurityContext | object | `{"enabled":true,"fsGroup":65532,"fsGroupChangePolicy":"OnRootMismatch","seLinuxOptions":{}}` | Pod security context configuration |
 | podSecurityContext.enabled | bool | `true` | Enable pod security context |
 | podSecurityContext.fsGroup | int | `65532` | FSGroup for volume ownership |

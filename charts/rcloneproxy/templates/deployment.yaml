@@ -1,0 +1,181 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rcloneproxy
+  labels:
+    app: rcloneproxy
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: rcloneproxy
+  template:
+    metadata:
+      labels:
+        app: rcloneproxy
+    spec:
+      {{- if .Values.podSecurityContext.enabled }}
+      securityContext:
+        {{- if .Values.podSecurityContext.fsGroup }}
+        fsGroup: {{ .Values.podSecurityContext.fsGroup }}
+        {{- end }}
+        {{- if .Values.podSecurityContext.fsGroupChangePolicy }}
+        fsGroupChangePolicy: {{ .Values.podSecurityContext.fsGroupChangePolicy }}
+        {{- end }}
+        {{- if .Values.podSecurityContext.seLinuxOptions }}
+        seLinuxOptions:
+          {{- toYaml .Values.podSecurityContext.seLinuxOptions | nindent 10 }}
+        {{- end }}
+      {{- end }}
+      initContainers:
+        - name: generate-config
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.containerSecurityContext.enabled }}
+          securityContext:
+            {{- if .Values.containerSecurityContext.runAsUser }}
+            runAsUser: {{ .Values.containerSecurityContext.runAsUser }}
+            {{- end }}
+            {{- if .Values.containerSecurityContext.runAsNonRoot }}
+            runAsNonRoot: {{ .Values.containerSecurityContext.runAsNonRoot }}
+            {{- end }}
+            {{- if ne .Values.containerSecurityContext.allowPrivilegeEscalation nil }}
+            allowPrivilegeEscalation: {{ .Values.containerSecurityContext.allowPrivilegeEscalation }}
+            {{- end }}
+            {{- if ne .Values.containerSecurityContext.readOnlyRootFilesystem nil }}
+            readOnlyRootFilesystem: {{ .Values.containerSecurityContext.readOnlyRootFilesystem }}
+            {{- end }}
+            {{- if .Values.containerSecurityContext.capabilities }}
+            capabilities:
+              {{- toYaml .Values.containerSecurityContext.capabilities | nindent 14 }}
+            {{- end }}
+          {{- end }}
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - |
+              set -e
+              # Obscure the encryption passwords
+              OBSCURED_PASSWORD=$(echo -n "$ENCRYPTION_PASSWORD" | rclone obscure -)
+              OBSCURED_PASSWORD2=$(echo -n "$ENCRYPTION_PASSWORD2" | rclone obscure -)
+
+              # Generate rclone.conf with obscured passwords
+              cat > /config/rclone/rclone.conf <<EOF
+              [target]
+              type = s3
+              provider = Other
+              env_auth = false
+              access_key_id = $BACKEND_ACCESS_KEY_ID
+              secret_access_key = $BACKEND_SECRET_ACCESS_KEY
+              endpoint = $BACKEND_ENDPOINT
+              region = $BACKEND_REGION
+              location_constraint = $BACKEND_REGION
+              force_path_style = true
+
+              [s3-crypt]
+              type = crypt
+              remote = target:$BACKEND_BUCKET
+              filename_encryption = standard
+              directory_name_encryption = true
+              password = $OBSCURED_PASSWORD
+              password2 = $OBSCURED_PASSWORD2
+              EOF
+
+              echo "Generated rclone.conf with obscured passwords"
+          env:
+            - name: BACKEND_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.backend.secretRef.name }}
+                  key: {{ .Values.backend.secretRef.keys.accessKeyID }}
+            - name: BACKEND_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.backend.secretRef.name }}
+                  key: {{ .Values.backend.secretRef.keys.accessKeySecret }}
+            - name: BACKEND_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.backend.secretRef.name }}
+                  key: {{ .Values.backend.secretRef.keys.endpoint }}
+            - name: BACKEND_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.backend.secretRef.name }}
+                  key: {{ .Values.backend.secretRef.keys.region }}
+            - name: BACKEND_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.backend.secretRef.name }}
+                  key: {{ .Values.backend.secretRef.keys.bucket }}
+            - name: ENCRYPTION_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rcloneproxy-encryption-key
+                  key: password
+            - name: ENCRYPTION_PASSWORD2
+              valueFrom:
+                secretKeyRef:
+                  name: rcloneproxy-encryption-key
+                  key: password2
+          volumeMounts:
+            - name: rclone-config
+              mountPath: /config/rclone
+      containers:
+        - name: rcloneproxy
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.containerSecurityContext.enabled }}
+          securityContext:
+            {{- if .Values.containerSecurityContext.runAsUser }}
+            runAsUser: {{ .Values.containerSecurityContext.runAsUser }}
+            {{- end }}
+            {{- if .Values.containerSecurityContext.runAsNonRoot }}
+            runAsNonRoot: {{ .Values.containerSecurityContext.runAsNonRoot }}
+            {{- end }}
+            {{- if ne .Values.containerSecurityContext.allowPrivilegeEscalation nil }}
+            allowPrivilegeEscalation: {{ .Values.containerSecurityContext.allowPrivilegeEscalation }}
+            {{- end }}
+            {{- if ne .Values.containerSecurityContext.readOnlyRootFilesystem nil }}
+            readOnlyRootFilesystem: {{ .Values.containerSecurityContext.readOnlyRootFilesystem }}
+            {{- end }}
+            {{- if .Values.containerSecurityContext.capabilities }}
+            capabilities:
+              {{- toYaml .Values.containerSecurityContext.capabilities | nindent 14 }}
+            {{- end }}
+          {{- end }}
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - |
+              rclone serve s3 s3-crypt: --addr :{{ .Values.service.port }} --auth-key "${BACKEND_ACCESS_KEY_ID},${BACKEND_SECRET_ACCESS_KEY}"
+          env:
+            - name: RCLONE_CONFIG
+              value: /config/rclone/rclone.conf
+            - name: BACKEND_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.backend.secretRef.name }}
+                  key: {{ .Values.backend.secretRef.keys.accessKeyID }}
+            - name: BACKEND_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.backend.secretRef.name }}
+                  key: {{ .Values.backend.secretRef.keys.accessKeySecret }}
+          ports:
+            - name: s3
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: rclone-config
+              mountPath: /config/rclone
+              readOnly: true
+          stdin: true
+          tty: true
+      volumes:
+        - name: rclone-config
+          emptyDir: {}

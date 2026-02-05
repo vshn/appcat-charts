@@ -1,0 +1,8 @@
+apiVersion: v2
+name: rcloneproxy
+description: A Helm chart for deploying rclone as an intermediate s3 proxy
+type: application
+version: 0.0.1
+maintainers:
+  - name: Schedar Team
+    email: info@vshn.ch

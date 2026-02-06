@@ -2,6 +2,18 @@ apiVersion: v1
 entries:
   rcloneproxy:
   - apiVersion: v2
+    created: "2026-02-06T13:26:50.90658778Z"
+    description: A Helm chart for deploying rclone as an intermediate s3 proxy
+    digest: 5288de8ac609c7dfdcf5984e1085b4876065b1bf51cd6039a88ec9819ff1f1c7
+    maintainers:
+    - email: info@vshn.ch
+      name: Schedar Team
+    name: rcloneproxy
+    type: application
+    urls:
+    - https://github.com/vshn/appcat-charts/releases/download/rcloneproxy-0.0.2/rcloneproxy-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
     created: "2026-02-05T12:06:35.473297708Z"
     description: A Helm chart for deploying rclone as an intermediate s3 proxy
     digest: d10b7990e3ee6e833272e9b0a9e43420b49862c2365ea442dd99f020df854c22
@@ -185,4 +197,4 @@ entries:
     urls:
     - https://github.com/vshn/appcat-charts/releases/download/vshnpostgresql-0.5.0/vshnpostgresql-0.5.0.tgz
     version: 0.5.0
-generated: "2026-02-05T12:06:35.473333153Z"
+generated: "2026-02-06T13:26:50.9066194Z"

@@ -16,6 +16,11 @@ spec:
     spec:
       {{- if .Values.podSecurityContext.enabled }}
       securityContext:
+        {{- if .Values.isOpenshift }}
+        fsGroupChangePolicy: OnRootMismatch
+        seLinuxOptions:
+          type: spc_t
+        {{- else }}
         {{- if .Values.podSecurityContext.fsGroup }}
         fsGroup: {{ .Values.podSecurityContext.fsGroup }}
         {{- end }}
@@ -26,6 +31,7 @@ spec:
         seLinuxOptions:
           {{- toYaml .Values.podSecurityContext.seLinuxOptions | nindent 10 }}
         {{- end }}
+        {{- end }}
       {{- end }}
       initContainers:
         - name: generate-config
@@ -33,6 +39,15 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.containerSecurityContext.enabled }}
           securityContext:
+            {{- if .Values.isOpenshift }}
+            {{- /* OpenShift: Let SCC assign runAsUser */}}
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop:
+                - ALL
+            {{- else }}
             {{- if .Values.containerSecurityContext.runAsUser }}
             runAsUser: {{ .Values.containerSecurityContext.runAsUser }}
             {{- end }}
@@ -48,6 +63,7 @@ spec:
             {{- if .Values.containerSecurityContext.capabilities }}
             capabilities:
               {{- toYaml .Values.containerSecurityContext.capabilities | nindent 14 }}
+            {{- end }}
             {{- end }}
           {{- end }}
           command:
@@ -128,6 +144,14 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.containerSecurityContext.enabled }}
           securityContext:
+            {{- if .Values.isOpenshift }}
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop:
+                - ALL
+            {{- else }}
             {{- if .Values.containerSecurityContext.runAsUser }}
             runAsUser: {{ .Values.containerSecurityContext.runAsUser }}
             {{- end }}
@@ -143,6 +167,7 @@ spec:
             {{- if .Values.containerSecurityContext.capabilities }}
             capabilities:
               {{- toYaml .Values.containerSecurityContext.capabilities | nindent 14 }}
+            {{- end }}
             {{- end }}
           {{- end }}
           command:

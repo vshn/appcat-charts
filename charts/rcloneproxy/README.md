@@ -1,6 +1,6 @@
 # rcloneproxy
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for deploying rclone as an intermediate s3 proxy
 
@@ -18,7 +18,7 @@ Common/Useful Link references from values.yaml
 [prometheus-operator]: https://github.com/coreos/prometheus-operator
 # rcloneproxy
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for deploying rclone as an intermediate s3 proxy
 
@@ -51,6 +51,7 @@ A Helm chart for deploying rclone as an intermediate s3 proxy
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"ghcr.io/rclone/rclone"` | Image repository for rclone |
 | image.tag | string | `"1.73.0"` | Configure the image tag |
+| isOpenshift | bool | `false` | Set to true when deploying on OpenShift |
 | podSecurityContext | object | `{"enabled":true,"fsGroup":65532,"fsGroupChangePolicy":"OnRootMismatch","seLinuxOptions":{}}` | Pod security context configuration |
 | podSecurityContext.enabled | bool | `true` | Enable pod security context |
 | podSecurityContext.fsGroup | int | `65532` | FSGroup for volume ownership |

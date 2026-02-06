@@ -44,6 +44,9 @@ resources:
     memory: "512Mi"
     cpu: "25m"
 
+# -- Set to true when deploying on OpenShift
+isOpenshift: false
+
 # -- Pod security context configuration
 podSecurityContext:
   # -- Enable pod security context

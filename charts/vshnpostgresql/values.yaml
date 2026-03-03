@@ -368,6 +368,11 @@ cluster:
     # -- Lists of shared preload libraries to add to the default ones
     shared_preload_libraries: []
       # - pgaudit
+    # -- List of extensions to be loaded by the cluster using volume mounts from separate container images.
+    extensions: []
+      # - name: pgvector
+      #   image:
+      #     reference: ghcr.io/cloudnative-pg/pgvector:0.8.1-18-trixie
     # -- PostgreSQL LDAP configuration (see https://cloudnative-pg.io/documentation/current/postgresql_conf/#ldap-configuration)
     ldap: {}
       # https://cloudnative-pg.io/documentation/current/postgresql_conf/#ldap-configuration

@@ -1,0 +1,67 @@
+image:
+  # -- Image repository for rclone
+  # -- uses the operators default as default
+  repository: ""
+  # -- Configure the image tag
+  # -- uses the operators default as default
+  tag: ""
+  # -- Image pull policy
+  pullPolicy: IfNotPresent
+
+# -- Number of replicas
+replicaCount: 1
+
+# -- The zone which this instance will serve
+zone: us-east-1
+
+# -- PVC size for data storage
+storageDataSpace: 50Gi
+
+# -- PVC size for metadata storage
+storageMetadataSpace: 5Gi
+
+# -- Service configuration
+service:
+  # -- Service type
+  type: ClusterIP
+
+# -- Resource requests and limits
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "10m"
+  limits:
+    memory: "512Mi"
+    cpu: "25m"
+
+# -- Set to true when deploying on OpenShift
+isOpenshift: false
+
+# -- Pod security context configuration
+podSecurityContext:
+  # -- Enable pod security context
+  enabled: true
+  # -- FSGroup for volume ownership
+  fsGroup: 65532
+  # -- FSGroupChangePolicy for volume ownership changes
+  fsGroupChangePolicy: "OnRootMismatch"
+  # -- SELinux options for OpenShift compatibility
+  seLinuxOptions: {}
+    # type: "spc_t"
+
+# -- Container security context configuration
+containerSecurityContext:
+  # -- Enable container security context
+  enabled: true
+  # -- Run as non-root user
+  runAsNonRoot: true
+  # -- User ID to run the container
+  runAsUser: 65532
+  # -- Disallow privilege escalation
+  allowPrivilegeEscalation: false
+  # -- Read-only root filesystem
+  readOnlyRootFilesystem: false
+  # -- Linux capabilities to drop
+  capabilities:
+    drop:
+      - ALL

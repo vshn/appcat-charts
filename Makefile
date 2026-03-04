@@ -83,7 +83,5 @@ endif
 push-local-all: ## Pushes all charts to a local OCI registry
 	@for chart in $(CHARTS); do \
 		echo "Pushing $$chart..."; \
-		helm package $(CHARTS_DIR)/$$chart --version $(VERSION); \
-		helm push $$chart-$(VERSION).tgz oci://$(REGISTRY)/$$chart --insecure-skip-tls-verify; \
-		rm $$chart-$(VERSION).tgz; \
+		$(MAKE) push-local -e CHART=$$chart; \
 	done

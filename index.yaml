@@ -172,6 +172,19 @@ entries:
     version: 0.0.1
   vshnpostgresql:
   - apiVersion: v2
+    appVersion: 0.7.0
+    created: "2026-03-05T12:21:05.882357825Z"
+    description: A Helm chart for PostgreSQL clusters using the CloudNativePG operator
+    digest: 764e20d0d91e5b23fb1d9e28e5901e414d23caca0711d10858b895378ed618c3
+    maintainers:
+    - email: info@vshn.ch
+      name: Schedar Team
+    name: vshnpostgresql
+    type: application
+    urls:
+    - https://github.com/vshn/appcat-charts/releases/download/vshnpostgresql-0.7.0/vshnpostgresql-0.7.0.tgz
+    version: 0.7.0
+  - apiVersion: v2
     appVersion: 0.6.0
     created: "2026-01-20T08:37:19.714094215Z"
     description: A Helm chart for PostgreSQL clusters using the CloudNativePG operator
@@ -197,4 +210,4 @@ entries:
     urls:
     - https://github.com/vshn/appcat-charts/releases/download/vshnpostgresql-0.5.0/vshnpostgresql-0.5.0.tgz
     version: 0.5.0
-generated: "2026-02-06T13:26:50.9066194Z"
+generated: "2026-03-05T12:21:05.882394213Z"

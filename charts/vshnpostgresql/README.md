@@ -1,6 +1,6 @@
 # vshnpostgresql
 
-![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.6.0](https://img.shields.io/badge/AppVersion-0.6.0-informational?style=flat-square)
+![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.7.0](https://img.shields.io/badge/AppVersion-0.7.0-informational?style=flat-square)
 
 A Helm chart for PostgreSQL clusters using the CloudNativePG operator
 
@@ -140,6 +140,7 @@ refer to the [CloudNativePG Documentation](https://cloudnative-pg.io/documentati
 | cluster.plugins | list | `[]` | The plugins configuration, containing any plugin to be loaded with the corresponding configuration |
 | cluster.postgresGID | int | `-1` | The GID of the postgres user inside the image, defaults to 26 |
 | cluster.postgresUID | int | `-1` | The UID of the postgres user inside the image, defaults to 26 |
+| cluster.postgresql.extensions | list | `[]` | List of extensions to be loaded by the cluster using volume mounts from separate container images. |
 | cluster.postgresql.ldap | object | `{}` | PostgreSQL LDAP configuration (see https://cloudnative-pg.io/documentation/current/postgresql_conf/#ldap-configuration) |
 | cluster.postgresql.parameters | object | `{}` | PostgreSQL configuration options (postgresql.conf) |
 | cluster.postgresql.pg_hba | list | `[]` | PostgreSQL Host Based Authentication rules (lines to be appended to the pg_hba.conf file) |

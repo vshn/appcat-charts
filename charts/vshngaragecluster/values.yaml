@@ -12,6 +12,7 @@ image:
 replicaCount: 1
 
 # -- The zone which this instance will serve
+# -- Not to be confused with the region! The region is by default "garage".
 zone: us-east-1
 
 # -- PVC size for data storage

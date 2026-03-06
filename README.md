@@ -16,6 +16,7 @@ helm repo add appcat https://charts.appcat.ch
 | Downloads & Changelog | Chart |
 | --- | --- |
 | [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/rcloneproxy-0.0.2/total)](https://github.com/vshn/appcat-charts/releases/tag/rcloneproxy-0.0.2) | [rcloneproxy](charts/rcloneproxy/README.md) |
+| [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshngaragecluster-0.0.1/total)](https://github.com/vshn/appcat-charts/releases/tag/vshngaragecluster-0.0.1) | [vshngaragecluster](charts/vshngaragecluster/README.md) |
 | [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshnmariadb-0.0.12/total)](https://github.com/vshn/appcat-charts/releases/tag/vshnmariadb-0.0.12) | [vshnmariadb](charts/vshnmariadb/README.md) |
 | [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshnpostgresql-0.7.1/total)](https://github.com/vshn/appcat-charts/releases/tag/vshnpostgresql-0.7.1) | [vshnpostgresql](charts/vshnpostgresql/README.md) |
 

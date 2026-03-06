@@ -1,0 +1,8 @@
+apiVersion: v2
+name: vshngaragecluster
+description: A Helm chart for deploying a garage cluster via garage operator
+type: application
+version: 0.0.1
+maintainers:
+  - name: Schedar Team
+    email: info@vshn.ch

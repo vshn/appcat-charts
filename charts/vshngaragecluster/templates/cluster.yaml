@@ -1,0 +1,92 @@
+apiVersion: garage.rajsingh.info/v1alpha1
+kind: GarageCluster
+metadata:
+  name: garage
+spec:
+  {{- if gt .Values.replicaCount 1.0 }}
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: garage
+            topologyKey: "kubernetes.io/hostname"
+  {{- end }}
+  replicas: {{.Values.replicaCount}}
+  zone: {{.Values.zone}}
+  replication:
+    factor: {{.Values.replicaCount}}
+  security:
+    allowWorldReadableSecrets: true
+  storage:
+    data:
+      size: {{.Values.storageDataSpace}}
+    metadata:
+      size: {{.Values.storageMetadataSpace}}
+  network:
+    rpcBindPort: 3901
+    service:
+      type: ClusterIP
+  admin:
+    enabled: true
+    bindPort: 3903
+    adminTokenSecretRef:
+      name: garage-admin-token
+      key: token
+  resources:
+    requests:
+      cpu: {{.Values.resources.requests.cpu}}
+      memory: {{.Values.resources.requests.memory}}
+    limits:
+      cpu: {{.Values.resources.limits.cpu}}
+      memory: {{.Values.resources.limits.memory}}
+  {{- if .Values.podSecurityContext.enabled }}
+  securityContext:
+    {{- if .Values.isOpenshift }}
+    fsGroupChangePolicy: OnRootMismatch
+    seLinuxOptions:
+      type: spc_t
+    {{- else }}
+    {{- if .Values.podSecurityContext.fsGroup }}
+    fsGroup: {{ .Values.podSecurityContext.fsGroup }}
+    {{- end }}
+    {{- if .Values.podSecurityContext.fsGroupChangePolicy }}
+    fsGroupChangePolicy: {{ .Values.podSecurityContext.fsGroupChangePolicy }}
+    {{- end }}
+    {{- if .Values.podSecurityContext.seLinuxOptions }}
+    seLinuxOptions:
+      {{- toYaml .Values.podSecurityContext.seLinuxOptions | nindent 10 }}
+    {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- if .Values.containerSecurityContext.enabled }}
+  containerSecurityContext:
+    {{- if .Values.isOpenshift }}
+    {{- /* OpenShift: Let SCC assign runAsUser */}}
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: false
+    capabilities:
+      drop:
+        - ALL
+    {{- else }}
+    {{- if .Values.containerSecurityContext.runAsUser }}
+    runAsUser: {{ .Values.containerSecurityContext.runAsUser }}
+    {{- end }}
+    {{- if .Values.containerSecurityContext.runAsNonRoot }}
+    runAsNonRoot: {{ .Values.containerSecurityContext.runAsNonRoot }}
+    {{- end }}
+    {{- if ne .Values.containerSecurityContext.allowPrivilegeEscalation nil }}
+    allowPrivilegeEscalation: {{ .Values.containerSecurityContext.allowPrivilegeEscalation }}
+    {{- end }}
+    {{- if ne .Values.containerSecurityContext.readOnlyRootFilesystem nil }}
+    readOnlyRootFilesystem: {{ .Values.containerSecurityContext.readOnlyRootFilesystem }}
+    {{- end }}
+    {{- if .Values.containerSecurityContext.capabilities }}
+    capabilities:
+      {{- toYaml .Values.containerSecurityContext.capabilities | nindent 14 }}
+    {{- end }}
+    {{- end }}
+  {{- end }}

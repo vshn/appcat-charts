@@ -25,6 +25,19 @@ entries:
     urls:
     - https://github.com/vshn/appcat-charts/releases/download/rcloneproxy-0.0.1/rcloneproxy-0.0.1.tgz
     version: 0.0.1
+  vshngaragebucket:
+  - apiVersion: v2
+    created: "2026-03-09T14:28:33.138000237Z"
+    description: A Helm chart for deploying a garage cluster via garage operator
+    digest: a7acc6f7da596afd6882cfe4de613b6f2da080c7c53e044a13152cac5e6657a7
+    maintainers:
+    - email: info@vshn.ch
+      name: Schedar Team
+    name: vshngaragebucket
+    type: application
+    urls:
+    - https://github.com/vshn/appcat-charts/releases/download/vshngaragebucket-0.0.1/vshngaragebucket-0.0.1.tgz
+    version: 0.0.1
   vshngaragecluster:
   - apiVersion: v2
     created: "2026-03-09T07:52:19.84876983Z"
@@ -236,4 +249,4 @@ entries:
     urls:
     - https://github.com/vshn/appcat-charts/releases/download/vshnpostgresql-0.5.0/vshnpostgresql-0.5.0.tgz
     version: 0.5.0
-generated: "2026-03-09T07:52:19.848820434Z"
+generated: "2026-03-09T14:28:33.138055781Z"

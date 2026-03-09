@@ -1,0 +1,8 @@
+# -- Name of the bucket, if empty, will be randomly generated
+bucketName: ""
+
+# -- ClusterRef is the name of the cluster that should get the bucket
+clusterRef: ""
+
+# -- ClaimNamespace is needed to lookup the necessary information about the instanceNamespace
+claimNamespace: ""

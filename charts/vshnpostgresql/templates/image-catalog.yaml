@@ -1,4 +1,13 @@
 {{ if and .Values.imageCatalog.create (not (empty .Values.imageCatalog.images )) }}
+{{- $name := include "cluster.fullname" . -}}
+{{- $namespace := include "cluster.namespace" . -}}
+{{- $existingCatalog := lookup "postgresql.cnpg.io/v1" "ImageCatalog" $namespace $name -}}
+{{- $images := "" -}}
+{{- if $existingCatalog -}}
+  {{- $images = $existingCatalog.spec.images -}}
+{{- else -}}
+  {{- $images = .Values.imageCatalog.images -}}
+{{- end -}}
 apiVersion: postgresql.cnpg.io/v1
 kind: ImageCatalog
 metadata:
@@ -6,7 +15,7 @@ metadata:
   namespace: {{ include "cluster.namespace" . }}
 spec:
   images:
-    {{- range $image := .Values.imageCatalog.images }}
+    {{- range $image := $images }}
     - image: {{ $image.image }}
       major: {{ $image.major }}
     {{- end }}

@@ -1,6 +1,6 @@
 # vshnpostgresql
 
-![Version: 0.7.2](https://img.shields.io/badge/Version-0.7.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.7.2](https://img.shields.io/badge/AppVersion-0.7.2-informational?style=flat-square)
+![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.8.0](https://img.shields.io/badge/AppVersion-0.8.0-informational?style=flat-square)
 
 A Helm chart for PostgreSQL clusters using the CloudNativePG operator
 
@@ -96,6 +96,9 @@ refer to the [CloudNativePG Documentation](https://cloudnative-pg.io/documentati
 | backups.google.bucket | string | `""` |  |
 | backups.google.gkeEnvironment | bool | `false` |  |
 | backups.google.path | string | `"/"` |  |
+| backups.postUpgradeBackup.activeDeadlineSeconds | int | `3600` | Hard deadline in seconds for the job before it is killed |
+| backups.postUpgradeBackup.image | string | `"portainer/kubectl-shell:2.40.0"` | Image used by the post-upgrade backup job |
+| backups.postUpgradeBackup.ttlSecondsAfterFinished | int | `600` | Seconds after which a completed job is automatically deleted |
 | backups.provider | string | `"s3"` | One of `s3`, `azure` or `google` |
 | backups.retentionPolicy | string | `"30d"` | Retention policy for backups |
 | backups.s3.accessKey | string | `""` |  |

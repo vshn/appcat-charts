@@ -22,4 +22,53 @@ spec:
   method: {{ .method }}
 {{- end }}
 {{ end -}}
+{{- if (eq (include "cluster.useBarmanCloudPlugin" .) "true") }}
+{{- $name := include "cluster.fullname" . -}}
+{{- $namespace := include "cluster.namespace" . -}}
+{{- $existingCluster := lookup "postgresql.cnpg.io/v1" "Cluster" $namespace $name -}}
+{{- if $existingCluster -}}
+{{- $currentVersion := $existingCluster.status.pgDataImageInfo.majorVersion | toString -}}
+{{- $targetVersion := .Values.version.postgresql | toString -}}
+{{- if ne $currentVersion $targetVersion }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ $name }}-post-upgrade-v{{ $targetVersion }}
+  namespace: {{ $namespace }}
+spec:
+  ttlSecondsAfterFinished: {{ .Values.backups.postUpgradeBackup.ttlSecondsAfterFinished }}
+  activeDeadlineSeconds: {{ .Values.backups.postUpgradeBackup.activeDeadlineSeconds }}
+  template:
+    spec:
+      serviceAccountName: {{ $name }}-post-upgrade
+      restartPolicy: OnFailure
+      containers:
+      - name: post-upgrade-backup
+        image: {{ .Values.backups.postUpgradeBackup.image }}
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Waiting for major version upgrade to v{{ $targetVersion }} to complete..."
+          kubectl wait cluster/{{ $name }} -n {{ $namespace }} \
+            --for=jsonpath='{.status.pgDataImageInfo.majorVersion}'={{ $targetVersion }} \
+            --timeout=3550s
+          echo "Upgrade to v{{ $targetVersion }} complete, creating backup..."
+          kubectl create -f - <<'BACKUP'
+          apiVersion: postgresql.cnpg.io/v1
+          kind: Backup
+          metadata:
+            name: {{ $name }}-post-upgrade-v{{ $targetVersion }}
+            namespace: {{ $namespace }}
+          spec:
+            cluster:
+              name: {{ $name }}
+            method: plugin
+            pluginConfiguration:
+              name: barman-cloud.cloudnative-pg.io
+          BACKUP
+{{- end }}
+{{- end }}
+{{- end }}
 {{ end }}

@@ -487,6 +487,14 @@ backups:
   # -- Retention policy for backups
   retentionPolicy: "30d"
 
+  postUpgradeBackup:
+    # -- Image used by the post-upgrade backup job
+    image: portainer/kubectl-shell:2.40.0
+    # -- Seconds after which a completed job is automatically deleted
+    ttlSecondsAfterFinished: 600
+    # -- Hard deadline in seconds for the job before it is killed
+    activeDeadlineSeconds: 3600
+
 replica:
   # --  Defines the name of this cluster. It is used to determine if this is a primary or a replica cluster, comparing it with primary. Leave empty by default.
   self: ""

@@ -36,16 +36,33 @@ function configure_admin_user() {
 
   local ACCOUNT_ID=$(echo "${actual_user_table}" | grep -E "\s+${GITEA_ADMIN_USERNAME}\s+" | awk -F " " "{printf \$1}")
   if [[ -z "${ACCOUNT_ID}" ]]; then
-    local -a create_args
-    create_args=(--admin --username "${GITEA_ADMIN_USERNAME}" --password "${GITEA_ADMIN_PASSWORD}" --email {{ .Values.gitea.admin.email | quote }})
-    if [[ "${GITEA_ADMIN_PASSWORD_MODE}" = initialOnlyRequireReset ]]; then
-      create_args+=(--must-change-password=true)
+    # The expected admin username was not found — check if user ID 1 exists under a
+    # different name (i.e. the admin was renamed via the UI). If so, skip creation
+    # and only sync the password to avoid an Init:Error crash loop.
+    local RENAMED_ADMIN=$(echo "${actual_user_table}" | awk '$1 == "1" {print $2}')
+    if [[ -n "${RENAMED_ADMIN}" ]]; then
+      echo "Admin user has been renamed from '${GITEA_ADMIN_USERNAME}' to '${RENAMED_ADMIN}'. Skipping creation."
+      if [[ "${GITEA_ADMIN_PASSWORD_MODE}" = keepUpdated ]]; then
+        echo "Running password sync for '${RENAMED_ADMIN}'..."
+        local -a change_args
+        change_args=(--username "${RENAMED_ADMIN}" --password "${GITEA_ADMIN_PASSWORD}" --must-change-password=false)
+        gitea admin user change-password "${change_args[@]}"
+        echo '...password sync done.'
+      else
+        echo "Admin account '${RENAMED_ADMIN}' already exist, but update mode is set to '${GITEA_ADMIN_PASSWORD_MODE}'. Skipping."
+      fi
     else
-      create_args+=(--must-change-password=false)
+      local -a create_args
+      create_args=(--admin --username "${GITEA_ADMIN_USERNAME}" --password "${GITEA_ADMIN_PASSWORD}" --email {{ .Values.gitea.admin.email | quote }})
+      if [[ "${GITEA_ADMIN_PASSWORD_MODE}" = initialOnlyRequireReset ]]; then
+        create_args+=(--must-change-password=true)
+      else
+        create_args+=(--must-change-password=false)
+      fi
+      echo "No admin user '${GITEA_ADMIN_USERNAME}' found. Creating now..."
+      gitea admin user create "${create_args[@]}"
+      echo '...created.'
     fi
-    echo "No admin user '${GITEA_ADMIN_USERNAME}' found. Creating now..."
-    gitea admin user create "${create_args[@]}"
-    echo '...created.'
   else
     if [[ "${GITEA_ADMIN_PASSWORD_MODE}" = keepUpdated ]]; then
       echo "Admin account '${GITEA_ADMIN_USERNAME}' already exist. Running update to sync password..."

@@ -2,7 +2,7 @@ apiVersion: v2
 name: forgejo
 description: Forgejo Helm chart for Kubernetes
 type: application
-version: 0.0.0
+version: 16.2.1-vshn.1
 appVersion: 14.0.3
 icon: https://code.forgejo.org/forgejo/forgejo/raw/branch/forgejo/assets/logo.svg
 home: https://forgejo.org/

@@ -1,0 +1,38 @@
+apiVersion: v2
+name: forgejo
+description: Forgejo Helm chart for Kubernetes
+type: application
+version: 0.0.0
+appVersion: 14.0.3
+icon: https://code.forgejo.org/forgejo/forgejo/raw/branch/forgejo/assets/logo.svg
+home: https://forgejo.org/
+
+keywords:
+  - git
+  - issue tracker
+  - code review
+  - wiki
+  - forgejo
+  - gitea
+  - gogs
+sources:
+  - https://code.forgejo.org/forgejo-helm/forgejo-helm
+  - https://codeberg.org/forgejo/forgejo
+maintainers:
+  - name: Michael Kriese
+    email: michael.kriese@visualon.de
+  - name: Patrick Schratz
+    email: mail@pat-s.me
+
+# Bitnami charts are served from ghcr mirror because of rate limiting on Docker Hub
+# https://hub.docker.com/u/bitnamicharts
+# https://blog.bitnami.com/2023/01/bitnami-helm-charts-available-as-oci.html
+# https://github.com/bitnami/charts/issues/30853
+# https://code.forgejo.org/forgejo-helm/forgejo-helm/issues/1045
+dependencies:
+  # https://github.com/bitnami/charts/blob/main/bitnami/common/Chart.yaml
+  - name: common
+    repository: oci://ghcr.io/visualon/bitnamicharts
+    tags:
+      - bitnami-common
+    version: 2.37.0

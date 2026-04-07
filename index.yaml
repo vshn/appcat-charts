@@ -1,5 +1,40 @@
 apiVersion: v1
 entries:
+  forgejo:
+  - apiVersion: v2
+    appVersion: 14.0.3
+    created: "2026-04-07T15:38:06.314530821Z"
+    dependencies:
+    - name: common
+      repository: oci://ghcr.io/visualon/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.37.0
+    description: Forgejo Helm chart for Kubernetes
+    digest: e719b068bb56a6c45ba28cd36ca088d73bf2fee1cd8804feca0f0b1724776505
+    home: https://forgejo.org/
+    icon: https://code.forgejo.org/forgejo/forgejo/raw/branch/forgejo/assets/logo.svg
+    keywords:
+    - git
+    - issue tracker
+    - code review
+    - wiki
+    - forgejo
+    - gitea
+    - gogs
+    maintainers:
+    - email: michael.kriese@visualon.de
+      name: Michael Kriese
+    - email: mail@pat-s.me
+      name: Patrick Schratz
+    name: forgejo
+    sources:
+    - https://code.forgejo.org/forgejo-helm/forgejo-helm
+    - https://codeberg.org/forgejo/forgejo
+    type: application
+    urls:
+    - https://github.com/vshn/appcat-charts/releases/download/forgejo-16.2.1-vshn.1/forgejo-16.2.1-vshn.1.tgz
+    version: 16.2.1-vshn.1
   rcloneproxy:
   - apiVersion: v2
     created: "2026-02-06T13:26:50.90658778Z"
@@ -262,4 +297,4 @@ entries:
     urls:
     - https://github.com/vshn/appcat-charts/releases/download/vshnpostgresql-0.5.0/vshnpostgresql-0.5.0.tgz
     version: 0.5.0
-generated: "2026-03-20T13:08:43.432754278Z"
+generated: "2026-04-07T15:38:06.314574042Z"

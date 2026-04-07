@@ -1,0 +1,110 @@
+suite: config template | server section (domain related)
+release:
+  name: gitea-unittests
+  namespace: testing
+tests:
+  - it: '[default values] uses ingress host for DOMAIN|SSH_DOMAIN|ROOT_URL'
+    template: templates/gitea/config.yaml
+    asserts:
+      - documentIndex: 0
+        matchRegex:
+          path: stringData.server
+          pattern: \nDOMAIN=git.example.com
+      - documentIndex: 0
+        matchRegex:
+          path: stringData.server
+          pattern: \nSSH_DOMAIN=git.example.com
+      - documentIndex: 0
+        matchRegex:
+          path: stringData.server
+          pattern: \nROOT_URL=http://git.example.com
+
+  ################################################
+
+  - it: '[ingress] [no hosts] uses gitea http service for DOMAIN|SSH_DOMAIN|ROOT_URL'
+    template: templates/gitea/config.yaml
+    set:
+      ingress:
+        hosts: []
+    asserts:
+      - documentIndex: 0
+        matchRegex:
+          path: stringData.server
+          pattern: \nDOMAIN=gitea-unittests-forgejo-http.testing.svc.cluster.local
+      - documentIndex: 0
+        matchRegex:
+          path: stringData.server
+          pattern: \nSSH_DOMAIN=gitea-unittests-forgejo-http.testing.svc.cluster.local
+      - documentIndex: 0
+        matchRegex:
+          path: stringData.server
+          pattern: \nROOT_URL=http://gitea-unittests-forgejo-http.testing.svc.cluster.local
+
+  ################################################
+
+  - it: '[ingress] [provided via values] uses that for DOMAIN|SSH_DOMAIN|ROOT_URL'
+    template: templates/gitea/config.yaml
+    set:
+      gitea.config.server.DOMAIN: provided.example.com
+      ingress:
+        hosts:
+          - host: non-used.example.com
+            paths:
+              - path: /
+                pathType: Prefix
+    asserts:
+      - documentIndex: 0
+        matchRegex:
+          path: stringData.server
+          pattern: \nDOMAIN=provided.example.com
+      - documentIndex: 0
+        matchRegex:
+          path: stringData.server
+          pattern: \nSSH_DOMAIN=provided.example.com
+      - documentIndex: 0
+        matchRegex:
+          path: stringData.server
+          pattern: \nROOT_URL=http://provided.example.com
+
+  ################################################
+
+  - it: '[httpRoute] [provided via values] uses that for DOMAIN|SSH_DOMAIN|ROOT_URL'
+    template: templates/gitea/config.yaml
+    set:
+      httpRoute:
+        enabled: true
+        hostnames:
+          - provided.example.com
+    asserts:
+      - documentIndex: 0
+        matchRegex:
+          path: stringData.server
+          pattern: \nDOMAIN=provided.example.com
+      - documentIndex: 0
+        matchRegex:
+          path: stringData.server
+          pattern: \nSSH_DOMAIN=provided.example.com
+      - documentIndex: 0
+        matchRegex:
+          path: stringData.server
+          pattern: \nROOT_URL=https://provided.example.com
+      - documentIndex: 0
+        matchRegex:
+          path: stringData.server
+          pattern: \nPROTOCOL=http\n
+
+  ################################################
+
+  - it: '[httpRoute] [provided via values] terminate false'
+    template: templates/gitea/config.yaml
+    set:
+      httpRoute:
+        enabled: true
+        hostnames:
+          - provided.example.com
+        terminate: false
+    asserts:
+      - documentIndex: 0
+        matchRegex:
+          path: stringData.server
+          pattern: \nROOT_URL=http://provided.example.com

@@ -15,6 +15,7 @@ helm repo add appcat https://charts.appcat.ch
 
 | Downloads & Changelog | Chart |
 | --- | --- |
+| [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/forgejo-helm-16.2.1-vshn.1/total)](https://github.com/vshn/appcat-charts/releases/tag/forgejo-helm-16.2.1-vshn.1) | [forgejo-helm](charts/forgejo-helm/README.md) |
 | [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/rcloneproxy-0.0.2/total)](https://github.com/vshn/appcat-charts/releases/tag/rcloneproxy-0.0.2) | [rcloneproxy](charts/rcloneproxy/README.md) |
 | [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshngaragebucket-0.0.1/total)](https://github.com/vshn/appcat-charts/releases/tag/vshngaragebucket-0.0.1) | [vshngaragebucket](charts/vshngaragebucket/README.md) |
 | [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshngaragecluster-0.0.1/total)](https://github.com/vshn/appcat-charts/releases/tag/vshngaragecluster-0.0.1) | [vshngaragecluster](charts/vshngaragecluster/README.md) |

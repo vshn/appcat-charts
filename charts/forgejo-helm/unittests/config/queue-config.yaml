@@ -1,0 +1,27 @@
+suite: config template | queue config
+release:
+  name: gitea-unittests
+  namespace: testing
+tests:
+  - it: queue is configured correctly for 'levelDB'
+    template: templates/gitea/config.yaml
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: stringData.queue
+          value: |-
+            CONN_STR=
+            TYPE=level
+
+  - it: queue can be customized
+    template: templates/gitea/config.yaml
+    set:
+      gitea.config.queue.TYPE: custom-type
+      gitea.config.queue.CONN_STR: custom-connection-string
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: stringData.queue
+          value: |-
+            CONN_STR=custom-connection-string
+            TYPE=custom-type

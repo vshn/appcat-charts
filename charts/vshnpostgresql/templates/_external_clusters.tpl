@@ -20,7 +20,7 @@ externalClusters:
     plugin:
       name: barman-cloud.cloudnative-pg.io
       parameters:
-        barmanObjectName: {{ include "cluster.fullname" $  }}-object-store
+        barmanObjectName: {{ .Values.recovery.objectStoreName | default (printf "%s-object-store" (include "cluster.fullname" .)) }}
         serverName: {{ .Values.recovery.clusterName |  default (include "cluster.fullname" .) }}
   {{- end }}
 {{- else if eq .Values.mode "replica" }}

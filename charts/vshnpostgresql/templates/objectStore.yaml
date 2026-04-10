@@ -9,7 +9,7 @@ spec:
   retentionPolicy: {{ . }}
   {{- end }}
   configuration:
-  {{- if and (eq .Values.mode "recovery") (eq .Values.recovery.method "object_store") -}}
+  {{- if and (eq .Values.mode "recovery") (eq .Values.recovery.method "object_store") (empty .Values.recovery.objectStoreName) -}}
   {{- $d := dict "chartFullname" (include "cluster.fullname" .) "scope" .Values.recovery "secretPrefix" "recovery" -}}
   {{- include "cluster.barmanObjectStoreConfig" $d | indent 2 }}
   {{- else }}

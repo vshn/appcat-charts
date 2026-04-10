@@ -1,3 +1,10 @@
+{{- $name := include "cluster.fullname" . -}}
+{{- $namespace := include "cluster.namespace" . -}}
+{{- $existingCluster := lookup "postgresql.cnpg.io/v1" "Cluster" $namespace $name -}}
+{{- $walStorage := false -}}
+{{- if $existingCluster -}}
+  {{- $walStorage = not (empty $existingCluster.spec.walStorage ) -}}
+{{- end -}}
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
@@ -27,7 +34,7 @@ spec:
     {{- if not (empty .Values.cluster.storage.storageClass) }}
     storageClass: {{ .Values.cluster.storage.storageClass }}
     {{- end }}
-  {{- if .Values.cluster.walStorage.enabled }}
+  {{- if $walStorage }}
   walStorage:
     size: {{ .Values.cluster.walStorage.size }}
     {{- if not (empty .Values.cluster.walStorage.storageClass) }}

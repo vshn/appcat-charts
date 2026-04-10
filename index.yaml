@@ -69,6 +69,40 @@ entries:
     urls:
     - https://github.com/vshn/appcat-charts/releases/download/forgejo-16.2.1-vshn.1/forgejo-16.2.1-vshn.1.tgz
     version: 16.2.1-vshn.1
+  - apiVersion: v2
+    appVersion: 14.0.3
+    created: "2026-04-10T11:25:03.077838038Z"
+    dependencies:
+    - name: common
+      repository: oci://ghcr.io/visualon/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.37.0
+    description: Forgejo Helm chart for Kubernetes
+    digest: 810fb967e550fdd402d72847fc576a52bb4426c3ad6b07b55372cfd1be4b47a8
+    home: https://forgejo.org/
+    icon: https://code.forgejo.org/forgejo/forgejo/raw/branch/forgejo/assets/logo.svg
+    keywords:
+    - git
+    - issue tracker
+    - code review
+    - wiki
+    - forgejo
+    - gitea
+    - gogs
+    maintainers:
+    - email: michael.kriese@visualon.de
+      name: Michael Kriese
+    - email: mail@pat-s.me
+      name: Patrick Schratz
+    name: forgejo
+    sources:
+    - https://code.forgejo.org/forgejo-helm/forgejo-helm
+    - https://codeberg.org/forgejo/forgejo
+    type: application
+    urls:
+    - https://github.com/vshn/appcat-charts/releases/download/forgejo-16.2.1-vshn.1/forgejo-16.2.1-vshn.1.tgz
+    version: 16.2.1-vshn.1
   rcloneproxy:
   - apiVersion: v2
     created: "2026-02-06T13:26:50.90658778Z"
@@ -267,6 +301,19 @@ entries:
     version: 0.0.1
   vshnpostgresql:
   - apiVersion: v2
+    appVersion: 0.8.0
+    created: "2026-04-10T11:25:03.227474589Z"
+    description: A Helm chart for PostgreSQL clusters using the CloudNativePG operator
+    digest: cd90c3e4aa4c928a6649b20eb614c651180852637cdd323d40523c64bb2cfb32
+    maintainers:
+    - email: info@vshn.ch
+      name: Schedar Team
+    name: vshnpostgresql
+    type: application
+    urls:
+    - https://github.com/vshn/appcat-charts/releases/download/vshnpostgresql-0.8.0/vshnpostgresql-0.8.0.tgz
+    version: 0.8.0
+  - apiVersion: v2
     appVersion: 0.7.2
     created: "2026-03-20T13:08:43.432703193Z"
     description: A Helm chart for PostgreSQL clusters using the CloudNativePG operator
@@ -331,4 +378,4 @@ entries:
     urls:
     - https://github.com/vshn/appcat-charts/releases/download/vshnpostgresql-0.5.0/vshnpostgresql-0.5.0.tgz
     version: 0.5.0
-generated: "2026-04-08T08:07:55.360378618Z"
+generated: "2026-04-10T11:25:03.227537516Z"

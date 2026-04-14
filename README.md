@@ -18,7 +18,7 @@ helm repo add appcat https://charts.appcat.ch
 | [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/forgejo-16.2.1-vshn.1/total)](https://github.com/vshn/appcat-charts/releases/tag/forgejo-16.2.1-vshn.1) | [forgejo](charts/forgejo/README.md) |
 | [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/rcloneproxy-0.0.2/total)](https://github.com/vshn/appcat-charts/releases/tag/rcloneproxy-0.0.2) | [rcloneproxy](charts/rcloneproxy/README.md) |
 | [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshngaragebucket-0.0.1/total)](https://github.com/vshn/appcat-charts/releases/tag/vshngaragebucket-0.0.1) | [vshngaragebucket](charts/vshngaragebucket/README.md) |
-| [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshngaragecluster-0.0.1/total)](https://github.com/vshn/appcat-charts/releases/tag/vshngaragecluster-0.0.1) | [vshngaragecluster](charts/vshngaragecluster/README.md) |
+| [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshngaragecluster-0.0.2/total)](https://github.com/vshn/appcat-charts/releases/tag/vshngaragecluster-0.0.2) | [vshngaragecluster](charts/vshngaragecluster/README.md) |
 | [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshnmariadb-0.0.12/total)](https://github.com/vshn/appcat-charts/releases/tag/vshnmariadb-0.0.12) | [vshnmariadb](charts/vshnmariadb/README.md) |
 | [![chart downloads](https://img.shields.io/github/downloads/vshn/appcat-charts/vshnpostgresql-0.8.1/total)](https://github.com/vshn/appcat-charts/releases/tag/vshnpostgresql-0.8.1) | [vshnpostgresql](charts/vshnpostgresql/README.md) |
 

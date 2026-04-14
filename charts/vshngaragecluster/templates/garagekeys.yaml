@@ -1,0 +1,16 @@
+{{- if .Values.adminKey.enabled -}}
+apiVersion: garage.rajsingh.info/v1alpha1
+kind: GarageKey
+metadata:
+  name: admin-key
+spec:
+  clusterRef:
+    name: garage
+  name: 'Admin Key'
+  secretTemplate:
+    name: 'admin-s3-credentials'
+  allBuckets:
+    read: true
+    write: true
+    owner: true
+{{- end }}

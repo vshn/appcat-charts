@@ -1,6 +1,6 @@
 # vshngaragecluster
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for deploying a garage cluster via garage operator
 
@@ -18,7 +18,7 @@ Common/Useful Link references from values.yaml
 [prometheus-operator]: https://github.com/coreos/prometheus-operator
 # vshngaragecluster
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for deploying a garage cluster via garage operator
 
@@ -32,6 +32,7 @@ A Helm chart for deploying a garage cluster via garage operator
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| adminKey | object | `{"enabled":false}` | Admin Key configuration |
 | containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":true,"readOnlyRootFilesystem":false,"runAsNonRoot":true,"runAsUser":65532}` | Container security context configuration |
 | containerSecurityContext.allowPrivilegeEscalation | bool | `false` | Disallow privilege escalation |
 | containerSecurityContext.capabilities | object | `{"drop":["ALL"]}` | Linux capabilities to drop |

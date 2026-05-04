@@ -1,5 +1,5 @@
 {{- if .Values.adminKey.enabled -}}
-apiVersion: garage.rajsingh.info/v1alpha1
+apiVersion: garage.rajsingh.info/v1beta1
 kind: GarageKey
 metadata:
   name: admin-key

@@ -1,4 +1,4 @@
-apiVersion: garage.rajsingh.info/v1alpha1
+apiVersion: garage.rajsingh.info/v1beta1
 kind: GarageCluster
 metadata:
   name: garage
@@ -19,7 +19,7 @@ spec:
   replication:
     factor: {{.Values.replicaCount}}
   security:
-    allowWorldReadableSecrets: true
+    allowInsecureSecretPermissions: true
   storage:
     data:
       size: {{.Values.storageDataSpace}}
@@ -30,7 +30,6 @@ spec:
     service:
       type: ClusterIP
   admin:
-    enabled: true
     bindPort: 3903
     adminTokenSecretRef:
       name: garage-admin-token

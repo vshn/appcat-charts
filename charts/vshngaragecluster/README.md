@@ -1,6 +1,6 @@
 # vshngaragecluster
 
-![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for deploying a garage cluster via garage operator
 
@@ -18,7 +18,7 @@ Common/Useful Link references from values.yaml
 [prometheus-operator]: https://github.com/coreos/prometheus-operator
 # vshngaragecluster
 
-![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A Helm chart for deploying a garage cluster via garage operator
 
@@ -33,6 +33,7 @@ A Helm chart for deploying a garage cluster via garage operator
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | adminKey | object | `{"enabled":false}` | Admin Key configuration |
+| allowedNamespaces | list | `[]` | Namespaces permitted to reference this cluster's GarageKeys/Buckets via the garage-operator's GarageReferenceGrant. When empty no grant is emitted. The list is consumed by templates/referencegrant.yaml. |
 | containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"enabled":true,"readOnlyRootFilesystem":false,"runAsNonRoot":true,"runAsUser":65532}` | Container security context configuration |
 | containerSecurityContext.allowPrivilegeEscalation | bool | `false` | Disallow privilege escalation |
 | containerSecurityContext.capabilities | object | `{"drop":["ALL"]}` | Linux capabilities to drop |

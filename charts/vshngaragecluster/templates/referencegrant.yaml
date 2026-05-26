@@ -1,0 +1,14 @@
+{{- if .Values.allowedNamespaces }}
+apiVersion: garage.rajsingh.info/v1beta1
+kind: GarageReferenceGrant
+metadata:
+  name: appcat-allowed
+spec:
+  from:
+  {{- range .Values.allowedNamespaces }}
+    - kind: GarageKey
+      namespace: {{ . | quote }}
+    - kind: GarageBucket
+      namespace: {{ . | quote }}
+  {{- end }}
+{{- end }}

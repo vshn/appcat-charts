@@ -155,6 +155,18 @@ entries:
     version: 0.0.1
   vshngaragecluster:
   - apiVersion: v2
+    created: "2026-05-26T07:39:46.530367602Z"
+    description: A Helm chart for deploying a garage cluster via garage operator
+    digest: 891c377ea813525939aac091ced0b651faa64e30a84c9119e9986db5f93d493c
+    maintainers:
+    - email: info@vshn.ch
+      name: Schedar Team
+    name: vshngaragecluster
+    type: application
+    urls:
+    - https://github.com/vshn/appcat-charts/releases/download/vshngaragecluster-0.0.4/vshngaragecluster-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
     created: "2026-05-05T06:37:21.095494747Z"
     description: A Helm chart for deploying a garage cluster via garage operator
     digest: b042fe5de43e2739cc8bb73df56647f69468449c3a1a5594e4b8073c807899c8
@@ -427,4 +439,4 @@ entries:
     urls:
     - https://github.com/vshn/appcat-charts/releases/download/vshnpostgresql-0.5.0/vshnpostgresql-0.5.0.tgz
     version: 0.5.0
-generated: "2026-05-05T06:37:21.0955504Z"
+generated: "2026-05-26T07:39:46.530432152Z"

@@ -33,3 +33,6 @@ tls:
   required: false
   serverCASecretRef: ""
   serverCertSecretRef: ""
+
+updateStrategy:
+  autoUpdateDataPlane: false

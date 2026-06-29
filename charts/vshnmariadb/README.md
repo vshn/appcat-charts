@@ -1,6 +1,6 @@
 # vshnmariadb
 
-![Version: 0.0.12](https://img.shields.io/badge/Version-0.0.12-informational?style=flat-square) ![AppVersion: 0.0.12](https://img.shields.io/badge/AppVersion-0.0.12-informational?style=flat-square)
+![Version: 0.0.13](https://img.shields.io/badge/Version-0.0.13-informational?style=flat-square) ![AppVersion: 0.0.13](https://img.shields.io/badge/AppVersion-0.0.13-informational?style=flat-square)
 
 A Helm chart for MariaDB instances using the mariadb-operator
 
@@ -72,6 +72,11 @@ Only MariaDB official images are supported. |
 | ---                                   | ---                                       | ---
 | `tls.enabled`                         | Enabled is a flag to enable TLS           | true
 | `tls.required`                        | If tls connection should be enforced      | false
+
+### Update strategy
+| Parameter                             | Description                               | Default
+| ---                                   | ---                                       | ---
+| `updateStrategy.autoUpdateDataPlane`  | Whether the Galera data-plane version (agent and init containers) should be automatically updated based on the operator version   | false
 
 <!---
 Common/Useful Link references from values.yaml

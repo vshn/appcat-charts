@@ -53,3 +53,5 @@ spec:
       name: {{ .Values.tls.serverCertSecretRef }}
     serverCASecretRef:
       name: {{ .Values.tls.serverCASecretRef }}
+  updateStrategy:
+    autoUpdateDataPlane: {{ .Values.updateStrategy.autoUpdateDataPlane }}

@@ -60,3 +60,8 @@ Only MariaDB official images are supported. |
 | ---                                   | ---                                       | ---
 | `tls.enabled`                         | Enabled is a flag to enable TLS           | true
 | `tls.required`                        | If tls connection should be enforced      | false
+
+### Update strategy
+| Parameter                             | Description                               | Default
+| ---                                   | ---                                       | ---
+| `updateStrategy.autoUpdateDataPlane`  | Whether the Galera data-plane version (agent and init containers) should be automatically updated based on the operator version   | false

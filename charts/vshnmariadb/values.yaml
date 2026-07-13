@@ -17,7 +17,7 @@ galera:
     "cert.log_conflicts": "yes"
 
 startupProbe:
-  failureThreshold: 30
+  failureThreshold: 120
 
 metrics:
   enabled: true

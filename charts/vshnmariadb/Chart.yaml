@@ -1,8 +1,8 @@
 apiVersion: v1
-appVersion: 0.0.13
+appVersion: 0.0.14
 description: A Helm chart for MariaDB instances using the mariadb-operator
 name: vshnmariadb
-version: 0.0.13
+version: 0.0.14
 maintainers:
   - name: Schedar Team
     email: info@vshn.ch

@@ -52,9 +52,13 @@ spec:
   tls:
     enabled: {{ .Values.tls.enabled }}
     required: {{ .Values.tls.required }}
+    {{- with .Values.tls.serverCertSecretRef }}
     serverCertSecretRef:
-      name: {{ .Values.tls.serverCertSecretRef }}
+      name: {{ . }}
+    {{- end }}
+    {{- with .Values.tls.serverCASecretRef }}
     serverCASecretRef:
-      name: {{ .Values.tls.serverCASecretRef }}
+      name: {{ . }}
+    {{- end }}
   updateStrategy:
     autoUpdateDataPlane: {{ .Values.updateStrategy.autoUpdateDataPlane }}

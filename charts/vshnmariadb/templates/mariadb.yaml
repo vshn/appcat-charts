@@ -41,6 +41,9 @@ spec:
     {{- with .Values.galera.providerOptions }}
     providerOptions: {{ . | toYaml | nindent 6 }}
     {{- end }}
+    recovery:
+      podSyncTimeout: {{ .Values.galera.recovery.podSyncTimeout }}
+      clusterBootstrapTimeout: {{ .Values.galera.recovery.clusterBootstrapTimeout }}
   storage:
     size: {{ .Values.storage.size }}
   {{- with .Values.affinity }}

@@ -15,6 +15,9 @@ galera:
   providerOptions:
     "gcs.fc_single_primary": "yes"
     "cert.log_conflicts": "yes"
+  recovery:
+    podSyncTimeout: 30m
+    clusterBootstrapTimeout: 30m
 
 startupProbe:
   failureThreshold: 120

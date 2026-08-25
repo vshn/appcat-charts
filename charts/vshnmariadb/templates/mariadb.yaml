@@ -41,6 +41,9 @@ spec:
     {{- with .Values.galera.providerOptions }}
     providerOptions: {{ . | toYaml | nindent 6 }}
     {{- end }}
+    recovery:
+      podSyncTimeout: {{ .Values.galera.recovery.podSyncTimeout }}
+      clusterBootstrapTimeout: {{ .Values.galera.recovery.clusterBootstrapTimeout }}
   storage:
     size: {{ .Values.storage.size }}
   {{- with .Values.affinity }}
@@ -49,9 +52,13 @@ spec:
   tls:
     enabled: {{ .Values.tls.enabled }}
     required: {{ .Values.tls.required }}
+    {{- with .Values.tls.serverCertSecretRef }}
     serverCertSecretRef:
-      name: {{ .Values.tls.serverCertSecretRef }}
+      name: {{ . }}
+    {{- end }}
+    {{- with .Values.tls.serverCASecretRef }}
     serverCASecretRef:
-      name: {{ .Values.tls.serverCASecretRef }}
+      name: {{ . }}
+    {{- end }}
   updateStrategy:
     autoUpdateDataPlane: {{ .Values.updateStrategy.autoUpdateDataPlane }}

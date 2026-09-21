@@ -1,0 +1,47 @@
+name: Release Charts to ghcr.io
+on:
+  push:
+    branches: [main]
+    paths:
+      - "charts/**"
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  ghcr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5
+      - name: Login to ghcr.io
+        run: helm registry login ghcr.io -u ${{ github.actor }} --password-stdin <<< "${{ secrets.GITHUB_TOKEN }}"
+      - name: Push charts
+        run: |
+          set -uo pipefail
+          failed=0
+          for chart in charts/*; do
+            if [[ -f "$chart/Chart.yaml" ]]; then
+              echo "Publishing $chart"
+              package_dir="$(mktemp -d)"
+              if ! helm dependency update "$chart"; then
+                echo "Failed to update dependencies: $chart"
+                failed=1
+                continue
+              fi
+              if ! helm package "$chart" --destination "$package_dir"; then
+                echo "Failed to package: $chart"
+                failed=1
+                continue
+              fi
+              if ! helm push "$package_dir"/*.tgz \
+                  "oci://ghcr.io/${GITHUB_REPOSITORY_OWNER}"; then
+                echo "Failed to push: $chart"
+                failed=1
+                continue
+              fi
+              echo "Published: $chart"
+            fi
+          done
+          exit "$failed"

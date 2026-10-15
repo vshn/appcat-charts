@@ -36,6 +36,17 @@ spec:
       image: {{ .Values.metrics.exporter.image }}
   galera:
     enabled: {{ .Values.galera.enabled }}
+    {{ if .Values.galera.agent.basicAuth.enabled }}
+    agent:
+      kubernetesAuth:
+        enabled: false
+      basicAuth:
+        enabled: true
+        passwordSecretKeyRef:
+          key: "password"
+          name: "galera-basic-auth"
+          generate: true
+    {{- end  }}
     config:
       reuseStorageVolume: {{ .Values.galera.config.reuseStorageVolume }}
     {{- with .Values.galera.providerOptions }}

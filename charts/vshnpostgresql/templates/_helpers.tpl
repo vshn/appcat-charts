@@ -158,5 +158,9 @@ Check if barman-cloud plugin exists and is enabled
     {{- end }}
   {{- end }}
 {{- end }}
+{{- /* Recovery from an external ObjectStore uses the plugin without it being enabled in cluster.plugins */ -}}
+{{- if and (eq .Values.mode "recovery") (eq .Values.recovery.method "object_store") .Values.recovery.objectStoreName }}
+  {{- $hasPlugin = true }}
+{{- end }}
 {{- $hasPlugin }}
 {{- end }}

@@ -1,4 +1,5 @@
-{{ if eq (include "cluster.useBarmanCloudPlugin" .) "true" }}
+{{- /* Own ObjectStore only needed for backups, or recovery without external objectStoreName */ -}}
+{{ if and (eq (include "cluster.useBarmanCloudPlugin" .) "true") (or .Values.backups.enabled (and (eq .Values.mode "recovery") (eq .Values.recovery.method "object_store") (empty .Values.recovery.objectStoreName))) }}
 apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
 metadata:
